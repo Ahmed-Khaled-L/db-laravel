@@ -57,6 +57,8 @@ class CategoryController extends Controller
 
     public function destroy(Request $request)
     {
+
+        // dd($request->all());
         Category::where('id', $request->id)
             ->where('type', $request->type)
             ->delete();

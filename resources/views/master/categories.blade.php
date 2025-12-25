@@ -9,6 +9,7 @@
 </head>
 
 <body>
+
     <header class="navbar">
         <div class="nav-container">
             <div class="nav-left">
@@ -16,7 +17,7 @@
                 <p>إدارة التصنيفات</p>
             </div>
 
-            <button class="back-btn" onclick="location.href='../dashboard/dashboard.html'">
+            <button class="back-btn" onclick="location.href='#'">
                 رجوع
             </button>
         </div>
@@ -40,19 +41,25 @@
         </div>
 
         <!-- ===== Add Form ===== -->
-        <div class="form-card">
+        <form action="{{ route('categories.store') }}" method="POST" class="form-card">
+            @csrf
+
             <h3>إضافة تصنيف</h3>
 
-            <form class="form-row" action="" method="post">
-                <input type="number" id="catId" placeholder="ID">
-                <input type="text" id="catType" placeholder="Type">
-                <input type="text" id="catName" placeholder="اسم التصنيف">
-                <input type="text" id="org" placeholder="الجهة">
-                <input type="text" id="notes" placeholder="ملاحظات">
-            </form>
+            <div class="form-row">
+                <input type="number" name="id" placeholder="ID" required>
 
-            <button type="button" onclick="addCategory()">إضافة</button>
-        </div>
+                <input type="text" name="type" placeholder="Type" required>
+
+                <input type="text" name="cat_name" placeholder="اسم التصنيف">
+
+                <input type="text" name="organization" placeholder="الجهة">
+
+                <input type="text" name="notes" placeholder="ملاحظات">
+            </div>
+
+            <button type="submit">إضافة</button>
+        </form>
 
         <!-- ===== Table ===== -->
         <div class="table-card">
@@ -67,7 +74,31 @@
                         <th>إجراءات</th>
                     </tr>
                 </thead>
-                <tbody id="categoryTable"></tbody>
+                <tbody>
+                    @foreach ($categories as $index => $c)
+                        <tr>
+                            <td>{{ $c->id }}</td>
+                            <td>{{ $c->type }}</td>
+                            <td>{{ $c->cat_name }}</td>
+                            <td>{{ $c->organization }}</td>
+                            <td>{{ $c->notes }}</td>
+                            <td>
+                                <form action="#" method="GET" style="display:inline">
+                                    <button type="submit">✏️</button>
+                                </form>
+
+                                <form action="{{ route('categories.destroy', ['id' => $c->id, 'type' => $c->type]) }}"
+                                    method="POST" style="display:inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" onclick="return confirm('هل أنت متأكد؟')">
+                                        🗑️
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
             </table>
         </div>
 
