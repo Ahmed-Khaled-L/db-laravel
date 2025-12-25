@@ -1,0 +1,100 @@
+* {
+  box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, sans-serif;
+}
+
+body {
+  margin: 0;
+  background: #f4f6f8;
+}
+
+.page {
+  max-width: 1200px;
+  margin: auto;
+  padding: 40px 24px;
+}
+
+/* Header */
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.page-header h1 {
+  margin: 0;
+  font-size: 26px;
+  color: #1f2937;
+}
+
+/* Button */
+.btn-primary {
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.btn-primary:hover {
+  background: #1d4ed8;
+}
+
+/* Table Card */
+.table-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead {
+  background: #f1f5f9;
+}
+
+th, td {
+  padding: 14px 12px;
+  text-align: right;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+th {
+  font-weight: 600;
+  color: #374151;
+}
+
+tbody tr:hover {
+  background: #f9fafb;
+}
+.header-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.header-actions input {
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+}
+
+.actions button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  margin-left: 6px;
+}
+.header-actions select {
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  font-size: 14px;
+}

@@ -1,0 +1,67 @@
+body {
+  margin: 0;
+  background: #f4f6f8;
+  font-family: "Segoe UI", Tahoma, sans-serif;
+}
+
+.form-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card {
+  background: white;
+  padding: 32px;
+  width: 380px;
+  border-radius: 14px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+}
+
+.card h2 {
+  margin-top: 0;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.field {
+  margin-bottom: 16px;
+}
+
+.field label {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+.field input,
+.field select {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.btn-primary {
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+  flex: 1;
+}
+
+.btn-secondary {
+  background: #e5e7eb;
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+  flex: 1;
+}
