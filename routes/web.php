@@ -10,6 +10,7 @@ use App\Http\Controllers\StoreController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PersonnelCustodyController;
 
 // --- Dashboard ---
 Route::get("/", [DashboardController::class, "index"])->name("dashboard");
@@ -87,3 +88,11 @@ Route::delete("categories/{id}/{type}", [
     CategoryController::class,
     "destroy",
 ])->name("categories.destroy");
+
+Route::get('/custody/personnel', [PersonnelCustodyController::class, 'index'])->name('custody.personnel.index');
+Route::get('/custody/personnel/create', [PersonnelCustodyController::class, 'create'])->name('custody.personnel.create');
+Route::post('/custody/personnel', [PersonnelCustodyController::class, 'store'])->name('custody.personnel.store');
+
+// Details Steps
+Route::get('/custody/details/{auditId}', [PersonnelCustodyController::class, 'createDetails'])->name('custody.details.create');
+Route::post('/custody/details/{auditId}', [PersonnelCustodyController::class, 'storeDetails'])->name('custody.details.store');

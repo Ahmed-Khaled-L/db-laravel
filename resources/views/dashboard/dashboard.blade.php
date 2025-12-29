@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,6 +13,7 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
 </head>
+
 <body>
 
     <!-- Navbar -->
@@ -88,7 +90,8 @@
 
             <!-- Current Inventory (Placeholder) -->
             <div class="card" onclick="alert('صفحة المخزون')">
-                <div class="icon-wrapper bg-emerald" style="opacity: 0.7;"><i data-lucide="box" size="28"></i></div>
+                <div class="icon-wrapper bg-emerald" style="opacity: 0.7;"><i data-lucide="box" size="28"></i>
+                </div>
                 <h3>المخزون الحالي</h3>
                 <p>عرض الكميات الحالية</p>
                 <span class="arrow">➜</span>
@@ -134,20 +137,30 @@
                     <i data-lucide="users" size="24"></i>
                     <span>أصحاب العهد</span>
                 </div>
+                <!-- Owners Link (Corrected) -->
+                <div class="db-card" onclick="location.href='{{ route('registers.index') }}'">
+                    <i data-lucide="users" size="24"></i>
+                    <span>سجلات الدفاتر</span>
+                </div>
+                <!-- Owners Link (Corrected) -->
+                <div class="db-card" onclick="location.href='{{ route('stores.index') }}'">
+                    <i data-lucide="users" size="24"></i>
+                    <span>العناصر</span>
+                </div>
 
                 <!-- Categories Link (Placeholder) -->
                 <div class="db-card" onclick="location.href='{{ route('categories.index') }}'">
                     <i data-lucide="list" size="24"></i>
-                    <span>البنود (Categories)</span>
+                    <span>البنود</span>
                 </div>
 
                 <!-- Items Link (Placeholder) -->
                 <div class="db-card" onclick="location.href='{{ route('items.index') }}'">
                     <i data-lucide="package" size="24"></i>
-                    <span>الأصناف (Items)</span>
+                    <span>الأصناف</span>
                 </div>
 
-                <div class="db-card" onclick="alert('عهد شخصية')">
+                <div class="db-card" onclick="location.href='{{ route('custody.personnel.index') }}'">
                     <i data-lucide="user-check" size="24"></i>
                     <span>عهد شخصية</span>
                 </div>
@@ -186,4 +199,5 @@
         }
     </script>
 </body>
+
 </html>

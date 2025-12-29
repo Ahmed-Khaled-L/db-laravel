@@ -16,7 +16,7 @@
                 <h1>قواعد البيانات</h1>
                 <p>إدارة السجلات</p>
             </div>
-            <button class="back-btn" onclick="location.href='#'">
+            <button class="back-btn" onclick="location.href='{{ url()->previous() }}'">
                 رجوع
             </button>
         </div>
