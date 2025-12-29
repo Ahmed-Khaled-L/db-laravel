@@ -4,19 +4,27 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
     public function up(): void
     {
-        Schema::create('stores', function (Blueprint $table) {
+        Schema::create("stores", function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->foreignId('responsible_employee_id')->constrained('employees');
-            $table->string('classification'); // Logic Link to Categories.type
-            $table->string('custody_type');
+
+            $table->string("code")->nullable();
+            $table->string("name");
+
+            // Made nullable because Seeder has a store with NO manager
+            $table
+                ->foreignId("responsible_employee_id")
+                ->nullable()
+                ->constrained("employees")
+                ->nullOnDelete();
+
+            $table->string("classification"); // Logic Link to Categories.type
+            $table->string("custody_type");
             $table->timestamps();
         });
     }
@@ -26,6 +34,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('stores');
+        Schema::dropIfExists("stores");
     }
 };
