@@ -3,18 +3,20 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class RegisterPage extends Model
 {
-    protected $table = 'register_pages';
-
-    // Composite Primary Key configuration
-    protected $primaryKey = ['register_id', 'page_number'];
+    // 1. Disable Auto-Increment (Critical for Composite Keys)
     public $incrementing = false;
 
-    protected $fillable = ['register_id', 'page_number', 'store_id'];
+    // 2. Define Composite Key
+    protected $primaryKey = ["register_id", "page_number"];
 
-    // Helpful for composite key saving
+    // 3. Allow Mass Assignment
+    protected $fillable = ["register_id", "page_number", "store_id"];
+
+    // 4. Helper to handle composite key updates (Laravel Standard Fix)
     protected function setKeysForSaveQuery($query)
     {
         $keys = $this->getKeyName();
@@ -23,7 +25,7 @@ class RegisterPage extends Model
         }
 
         foreach ($keys as $keyName) {
-            $query->where($keyName, '=', $this->getKeyForSaveQuery($keyName));
+            $query->where($keyName, "=", $this->getKeyForSaveQuery($keyName));
         }
 
         return $query;
@@ -40,5 +42,15 @@ class RegisterPage extends Model
         }
 
         return $this->getAttribute($keyName);
+    }
+
+    public function register(): BelongsTo
+    {
+        return $this->belongsTo(Register::class);
+    }
+
+    public function store(): BelongsTo
+    {
+        return $this->belongsTo(Store::class);
     }
 }

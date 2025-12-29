@@ -19,6 +19,9 @@ class DatabaseSeeder extends Seeder
         $this->call([
             StoreSeedr::class,
             CategorySeeder::class,
+            EmployeeSeeder::class,
+            RegisterSeeder::class,
+            InventoryScenarioSeeder::class,
             // RealDataSeeder::class, // Uncomment this when you have the file ready
             // UserSeeder::class,
         ]);

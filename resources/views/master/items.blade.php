@@ -16,7 +16,7 @@
                 <h1>قواعد البيانات</h1>
                 <p>إدارة الأصناف</p>
             </div>
-            <button class="back-btn" onclick="location.href='{{ url()->previous() }}'">
+            <button class="back-btn" onclick="location.href='{{ route('dashboard') }}'">
                 رجوع
             </button>
         </div>
@@ -28,30 +28,65 @@
             <h2>الأصناف (Items)</h2>
         </div>
 
-        <!-- ===== Search & Filter ===== -->
-        <div class="filter-bar">
-            <select id="unitFilter" onchange="renderTable()">
+        <!-- ===== Feedback Messages ===== -->
+        @if(session('success'))
+            <div class="alert alert-success">{{ session('success') }}</div>
+        @endif
+        @if($errors->any())
+            <div class="alert alert-error">
+                <ul style="margin:0; padding-right:20px;">
+                    @foreach($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
+        <!-- ===== Search & Filter (GET Request) ===== -->
+        <form method="GET" action="{{ route('items.index') }}" class="filter-bar">
+            <!-- Filter by Unit -->
+            <select name="unit" onchange="this.form.submit()">
                 <option value="">كل الوحدات</option>
-                <option value="عدد">عدد</option>
-                <option value="رزمة">رزمة</option>
-                <option value="كجم">كجم</option>
+                @foreach($units as $u)
+                    <option value="{{ $u }}" {{ request('unit') == $u ? 'selected' : '' }}>
+                        {{ $u }}
+                    </option>
+                @endforeach
             </select>
 
-            <input type="text" id="searchInput" placeholder="بحث بالاسم أو الباركود" oninput="renderTable()">
-        </div>
+            <!-- Search Input -->
+            <input type="text" name="search" value="{{ request('search') }}" placeholder="بحث بالاسم أو الباركود">
 
-        <!-- ===== Form ===== -->
-        <div class="form-card">
+            <button type="submit">بحث</button>
+
+            @if(request('search') || request('unit'))
+                <button type="button" onclick="location.href='{{ route('items.index') }}'" style="background:#6b7280;">مسح</button>
+            @endif
+        </form>
+
+        <!-- ===== Add Form (POST Request) ===== -->
+        <form action="{{ route('items.store') }}" method="POST" class="form-card">
+            @csrf
             <div class="form-row">
-                <input id="itemId" placeholder="ID">
-                <input id="itemName" placeholder="اسم الصنف">
-                <input id="barcode" placeholder="Barcode">
-                <input id="unit" placeholder="الوحدة">
-                <input id="description" placeholder="الوصف">
+                <!-- ID is Auto-increment, hidden or readonly usually, but keeping layout -->
+                <input type="text" disabled placeholder="ID (Auto)" style="background:#f3f4f6;">
+
+                <input name="item_name" required placeholder="اسم الصنف *" value="{{ old('item_name') }}">
+                <input name="barcode" placeholder="Barcode (اختياري)" value="{{ old('barcode') }}">
+
+                <!-- Datalist for Units to allow new ones or pick existing -->
+                <input name="unit" required placeholder="الوحدة *" list="unitOptions" value="{{ old('unit') }}">
+                <datalist id="unitOptions">
+                    @foreach($units as $u)
+                        <option value="{{ $u }}">
+                    @endforeach
+                </datalist>
+
+                <input name="description" placeholder="الوصف (اختياري)" value="{{ old('description') }}">
             </div>
 
-            <button type="button" onclick="addItem()">إضافة</button>
-        </div>
+            <button type="submit" class="btn-add">إضافة صنف جديد</button>
+        </form>
 
         <!-- ===== Table ===== -->
         <div class="table-card">
@@ -66,13 +101,44 @@
                         <th>إجراءات</th>
                     </tr>
                 </thead>
-                <tbody id="itemsTable"></tbody>
+                <tbody>
+                    @forelse($items as $item)
+                        <tr>
+                            <td style="font-family:monospace; color:#2563eb;">{{ $item->id }}</td>
+                            <td style="font-weight:bold;">{{ $item->item_name }}</td>
+                            <td>{{ $item->barcode ?? '-' }}</td>
+                            <td><span style="background:#f3f4f6; padding:2px 8px; border-radius:4px;">{{ $item->unit }}</span></td>
+                            <td>{{ $item->description ?? '-' }}</td>
+                            <td>
+                                <!-- Edit (Could be modal or inline, keeping it simple for now) -->
+                                <button class="action-btn btn-edit" title="تعديل" onclick="alert('للتعديل يرجى استخدام صفحة التعديل المخصصة')">✏️</button>
+
+                                <!-- Delete -->
+                                <form action="{{ route('items.destroy', $item->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('هل أنت متأكد من حذف {{ $item->item_name }}؟');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="action-btn btn-delete" title="حذف">🗑️</button>
+                                </form>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="6" style="text-align:center; padding:30px; color:#888;">
+                                لا توجد أصناف مطابقة للبحث.
+                            </td>
+                        </tr>
+                    @endforelse
+                </tbody>
             </table>
+        </div>
+
+        <!-- Pagination Links -->
+        <div style="padding:20px; direction:ltr;">
+            {{ $items->withQueryString()->links() }}
         </div>
 
     </main>
 
-    <script src="{{ asset('js/items.js') }}"></script>
 </body>
 
 </html>
