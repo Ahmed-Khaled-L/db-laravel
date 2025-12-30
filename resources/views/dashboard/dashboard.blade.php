@@ -6,17 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>نظام إدارة المستودعات - لوحة التحكم</title>
 
-    <!-- CSS -->
     <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
 
-    <!-- Icons & Fonts -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
 
-    <!-- Navbar -->
     <nav class="navbar">
         <div class="nav-container">
             <div class="nav-right">
@@ -55,7 +52,6 @@
         </div>
     </nav>
 
-    <!-- Main Content -->
     <main class="main">
 
         <div class="title">
@@ -63,7 +59,6 @@
             <p id="pageSub">اختر العملية التي تريد القيام بها</p>
         </div>
 
-        <!-- Main Menu Grid -->
         <div id="mainMenu" class="grid fade-in">
 
             <div class="card" onclick="alert('صفحة إضافة عهدة')">
@@ -80,7 +75,6 @@
                 <span class="arrow">➜</span>
             </div>
 
-            <!-- Inventory Link (Placeholder) -->
             <div class="card" onclick="alert('صفحة الجرد')">
                 <div class="icon-wrapper bg-emerald"><i data-lucide="clipboard-list" size="28"></i></div>
                 <h3>إنشاء جرد</h3>
@@ -88,7 +82,6 @@
                 <span class="arrow">➜</span>
             </div>
 
-            <!-- Current Inventory (Placeholder) -->
             <div class="card" onclick="alert('صفحة المخزون')">
                 <div class="icon-wrapper bg-emerald" style="opacity: 0.7;"><i data-lucide="box" size="28"></i>
                 </div>
@@ -118,7 +111,6 @@
                 <span class="arrow">➜</span>
             </div>
 
-            <!-- Database Button (Opens Sub-Menu) -->
             <div class="card" onclick="openDatabase()">
                 <div class="icon-wrapper bg-indigo"><i data-lucide="database" size="28"></i></div>
                 <h3>قواعد البيانات</h3>
@@ -128,33 +120,34 @@
 
         </div>
 
-        <!-- Database Sub-Menu -->
         <div class="hidden fade-in" id="databaseSection">
             <div class="db-container">
 
-                <!-- Owners Link (Corrected) -->
-                <div class="db-card" onclick="location.href='{{ route('stores.index') }}'">
+                <div class="db-card" onclick="location.href='{{ route('employees.index') }}'">
                     <i data-lucide="users" size="24"></i>
-                    <span>أصحاب العهد</span>
+                    <span>الموظفين</span>
                 </div>
-                <!-- Owners Link (Corrected) -->
+
+                <div class="db-card" onclick="location.href='{{ route('departments.index') }}'">
+                    <i data-lucide="building" size="24"></i>
+                    <span>الأقسام</span>
+                </div>
+
+                <div class="db-card" onclick="location.href='{{ route('stores.index') }}'">
+                    <i data-lucide="warehouse" size="24"></i>
+                    <span>المخازن</span>
+                </div>
+
                 <div class="db-card" onclick="location.href='{{ route('registers.index') }}'">
-                    <i data-lucide="users" size="24"></i>
+                    <i data-lucide="book" size="24"></i>
                     <span>سجلات الدفاتر</span>
                 </div>
-                <!-- Owners Link (Corrected) -->
-                <div class="db-card" onclick="location.href='{{ route('stores.index') }}'">
-                    <i data-lucide="users" size="24"></i>
-                    <span>العناصر</span>
-                </div>
 
-                <!-- Categories Link (Placeholder) -->
                 <div class="db-card" onclick="location.href='{{ route('categories.index') }}'">
                     <i data-lucide="list" size="24"></i>
-                    <span>البنود</span>
+                    <span>البنود (التصنيفات)</span>
                 </div>
 
-                <!-- Items Link (Placeholder) -->
                 <div class="db-card" onclick="location.href='{{ route('items.index') }}'">
                     <i data-lucide="package" size="24"></i>
                     <span>الأصناف</span>

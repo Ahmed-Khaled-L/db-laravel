@@ -3,234 +3,52 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>بيان بالبنود المخزنية</title>
-    <!-- Fonts & Style -->
+    <title>البنود المخزنية</title>
+    <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/crud.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
-
-    <style>
-        * {
-            box-sizing: border-box;
-            font-family: "Cairo", "Segoe UI", Tahoma, sans-serif;
-        }
-
-        body {
-            margin: 0;
-            background: #f4f6f8;
-        }
-
-        .page {
-            max-width: 1200px;
-            margin: auto;
-            padding: 40px 24px;
-        }
-
-        .page-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 24px;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-
-        .page-header h1 {
-            margin: 0;
-            font-size: 26px;
-            color: #1f2937;
-        }
-
-        .header-actions {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-
-        .filter-select {
-            padding: 8px 12px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            font-family: "Cairo";
-            background: white;
-            min-width: 150px;
-            cursor: pointer;
-        }
-
-        .btn-back {
-            background: none;
-            border: 1px solid #ddd;
-            padding: 8px 12px;
-            border-radius: 6px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            color: #555;
-            transition: 0.2s;
-            text-decoration: none;
-            font-size: 14px;
-        }
-
-        .btn-back:hover {
-            background: #f3f4f6;
-        }
-
-        .btn-primary {
-            background: #2563eb;
-            color: white;
-            border: none;
-            padding: 10px 16px;
-            border-radius: 8px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            transition: 0.2s;
-            font-size: 14px;
-            text-decoration: none;
-        }
-
-        .btn-primary:hover {
-            background: #1d4ed8;
-        }
-
-        .btn-secondary {
-            background: white;
-            border: 1px solid #ddd;
-            padding: 10px 16px;
-            border-radius: 8px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            color: #374151;
-            transition: 0.2s;
-            font-size: 14px;
-        }
-
-        .btn-secondary:hover {
-            background: #f3f4f6;
-        }
-
-        .table-card {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-            overflow-x: auto;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            min-width: 800px;
-        }
-
-        thead {
-            background: #f8fafc;
-            border-bottom: 2px solid #e2e8f0;
-        }
-
-        th,
-        td {
-            padding: 16px;
-            text-align: right;
-            border-bottom: 1px solid #f1f5f9;
-            white-space: nowrap;
-        }
-
-        th {
-            font-weight: bold;
-            color: #475569;
-            font-size: 15px;
-        }
-
-        tbody tr:hover {
-            background-color: #f8fafc;
-        }
-
-        .btn-icon {
-            border: none;
-            background: none;
-            cursor: pointer;
-            font-size: 1.1rem;
-            padding: 6px;
-            border-radius: 4px;
-            transition: background 0.2s;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-        }
-
-        .btn-icon:hover {
-            background: #e2e8f0;
-        }
-
-        .badge {
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 12px;
-            font-weight: bold;
-        }
-
-        .badge-gray {
-            background: #f3f4f6;
-            color: #374151;
-        }
-    </style>
 </head>
 
 <body>
 
-    <div class="page">
-
-        <div class="page-header">
-            <a href="{{ url()->previous() }}" class="btn-back">
-                <span>←</span> رجوع
-            </a>
-
-            <h1>بيان بالبنود المخزنية (التصنيفات)</h1>
-
-            <div class="header-actions">
-                <!-- Filter Form -->
-                <form method="GET" action="{{ route('categories.index') }}" style="margin:0;">
-                    <select name="type" class="filter-select" onchange="this.form.submit()">
-                        <option value="">كل الأنواع</option>
-                        @foreach ($types as $t)
-                            <option value="{{ $t }}" {{ request('type') == $t ? 'selected' : '' }}>
-                                {{ $t }}
-                            </option>
-                        @endforeach
-                    </select>
-                </form>
-
-                <!-- Add Button -->
-                <a href="{{ route('categories.create') }}" class="btn-primary">
-                    <span>➕</span> إضافة
-                </a>
-
-                <button class="btn-secondary" onclick="window.print()">
-                    <span>📄</span> طباعة
-                </button>
+    <header class="navbar">
+        <div class="nav-container">
+            <div>
+                <h1>قواعد البيانات</h1>
+                <p>إدارة البنود والتصنيفات</p>
             </div>
+            <button class="back-btn" onclick="location.href='{{ route('dashboard') }}'">رجوع</button>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="title">
+            <h2>البنود (Categories)</h2>
         </div>
 
-        <!-- Feedback -->
-        @if (session('success'))
-            <div
-                style="background:#d1fae5; color:#065f46; padding:12px; border-radius:8px; margin-bottom:20px; border:1px solid #a7f3d0;">
-                {{ session('success') }}
-            </div>
-        @endif
+        <div id="toast" class="toast"></div>
 
-        <!-- Table -->
+        <div class="filter-bar">
+            <form method="GET" action="{{ route('categories.index') }}">
+                <select name="type" onchange="this.form.submit()">
+                    <option value="">كل الأنواع</option>
+                    @foreach ($types as $t)
+                        <option value="{{ $t }}" {{ request('type') == $t ? 'selected' : '' }}>
+                            {{ $t }}</option>
+                    @endforeach
+                </select>
+            </form>
+            <button class="btn-primary" onclick="openModal('addModal')">➕ إضافة بند جديد</button>
+        </div>
+
         <div class="table-card">
-            <table id="categoriesTable">
+            <table>
                 <thead>
                     <tr>
                         <th>رقم البند</th>
+                        <th>النوع</th>
                         <th>اسم البند</th>
                         <th>الجهة</th>
-                        <th>النوع</th>
                         <th>ملاحظات</th>
                         <th>إجراءات</th>
                     </tr>
@@ -238,48 +56,319 @@
                 <tbody>
                     @forelse($categories as $category)
                         <tr>
-                            <td style="font-weight:bold; font-family:monospace; color:#2563eb;">{{ $category->id }}</td>
-                            <td style="font-weight:bold;">{{ $category->cat_name }}</td>
+                            <td class="id-col">{{ $category->id }}</td>
+                            <td><span class="badge">{{ $category->type }}</span></td>
+                            <td><strong>{{ $category->cat_name }}</strong></td>
                             <td>{{ $category->organization ?? '-' }}</td>
-                            <td>
-                                <span class="badge badge-gray">
-                                    {{ $category->type ?? '-' }}
-                                </span>
-                            </td>
-                            <td style="color:#666; font-size:0.9em;">{{ $category->notes ?? '' }}</td>
-
-                            <td style="display:flex; gap:5px;">
-                                <!-- Edit: Passing Composite Key (ID + Type) -->
-                                <a href="{{ route('categories.edit', ['id' => $category->id, 'type' => $category->type]) }}"
-                                    class="btn-icon" title="تعديل">
-                                    ✏️
-                                </a>
-
-                                <!-- Delete: Passing Composite Key (ID + Type) -->
-                                <form
-                                    action="{{ route('categories.destroy', ['id' => $category->id, 'type' => $category->type]) }}"
-                                    method="POST" onsubmit="return confirm('هل أنت متأكد من حذف هذا البند؟');"
-                                    style="margin:0;">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn-icon" title="حذف"
-                                        style="color:#dc2626;">🗑️</button>
-                                </form>
+                            <td>{{ $category->notes }}</td>
+                            <td class="actions">
+                                <button class="btn-icon edit" onclick='openEditModal(@json($category))'
+                                    title="تعديل">✏️</button>
+                                <button class="btn-icon delete"
+                                    onclick='openDeleteModal("{{ $category->id }}", "{{ $category->type }}")'
+                                    title="حذف">🗑️</button>
                             </td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="6" style="text-align:center; padding: 40px; color:#888;">
-                                لا توجد بيانات
-                            </td>
+                            <td colspan="6" style="text-align:center;">لا توجد بيانات.</td>
                         </tr>
                     @endforelse
                 </tbody>
             </table>
         </div>
+    </main>
 
+    <div id="addModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>إضافة بند جديد</h3>
+                <span class="close-btn" onclick="closeModal('addModal')">&times;</span>
+            </div>
+            <form action="{{ route('categories.store') }}" method="POST">
+                @csrf
+                <div class="form-group">
+                    <label>رقم البند (ID)</label>
+                    <input type="number" name="id" required>
+                </div>
+                <div class="form-group">
+                    <label>النوع</label>
+                    <input type="text" name="type" required list="typeList">
+                    <datalist id="typeList">
+                        @foreach ($types as $t)
+                            <option value="{{ $t }}">
+                        @endforeach
+                    </datalist>
+                </div>
+                <div class="form-group">
+                    <label>اسم البند</label>
+                    <input type="text" name="cat_name" required>
+                </div>
+                <div class="form-group">
+                    <label>الجهة (اختياري)</label>
+                    <input type="text" name="organization">
+                </div>
+                <div class="form-group">
+                    <label>ملاحظات</label>
+                    <textarea name="notes"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" onclick="closeModal('addModal')">إلغاء</button>
+                    <button type="submit" class="btn-primary">حفظ</button>
+                </div>
+            </form>
+        </div>
     </div>
 
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>تعديل بيانات البند</h3>
+                <span class="close-btn" onclick="closeModal('editModal')">&times;</span>
+            </div>
+            <form id="editForm" method="POST">
+                @csrf @method('PUT')
+                <div class="form-group">
+                    <label>رقم البند</label>
+                    <input type="number" name="id" id="edit_id" required>
+                </div>
+                <div class="form-group">
+                    <label>النوع</label>
+                    <input type="text" name="type" id="edit_type" required>
+                </div>
+                <div class="form-group">
+                    <label>اسم البند</label>
+                    <input type="text" name="cat_name" id="edit_name" required>
+                </div>
+                <div class="form-group">
+                    <label>الجهة</label>
+                    <input type="text" name="organization" id="edit_org">
+                </div>
+                <div class="form-group">
+                    <label>ملاحظات</label>
+                    <textarea name="notes" id="edit_notes"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" onclick="closeModal('editModal')">إلغاء</button>
+                    <button type="submit" class="btn-primary">تحديث</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="deleteModal" class="modal">
+        <div class="modal-content" style="max-width: 400px; text-align: center;">
+            <div class="modal-header" style="justify-content: center;">
+                <h3 style="color: #dc2626;">⚠️ تأكيد الحذف</h3>
+            </div>
+            <p>هل أنت متأكد من حذف هذا البند؟ لا يمكن التراجع عن هذا الإجراء.</p>
+            <form id="deleteForm" method="POST">
+                @csrf @method('DELETE')
+                <div class="modal-footer" style="justify-content: center;">
+                    <button type="button" class="btn-secondary" onclick="closeModal('deleteModal')">إلغاء</button>
+                    <button type="submit" class="btn-danger">نعم، احذف</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <style>
+        /* Modal & Toast Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(2px);
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 5% auto;
+            padding: 25px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            animation: slideIn 0.3s;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .close-btn {
+            float: left;
+            font-size: 24px;
+            cursor: pointer;
+            color: #888;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+            text-align: right;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .btn-danger {
+            background-color: #dc2626;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        /* Toast */
+        .toast {
+            visibility: hidden;
+            min-width: 250px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 5px;
+            padding: 16px;
+            position: fixed;
+            z-index: 1000;
+            left: 50%;
+            bottom: 30px;
+            transform: translateX(-50%);
+        }
+
+        .toast.show {
+            visibility: visible;
+            animation: fadein 0.5s, fadeout 0.5s 2.5s;
+        }
+
+        .toast.success {
+            background-color: #10b981;
+        }
+
+        .toast.error {
+            background-color: #ef4444;
+        }
+
+        @keyframes fadein {
+            from {
+                bottom: 0;
+                opacity: 0;
+            }
+
+            to {
+                bottom: 30px;
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeout {
+            from {
+                bottom: 30px;
+                opacity: 1;
+            }
+
+            to {
+                bottom: 0;
+                opacity: 0;
+            }
+        }
+    </style>
+
+    <script>
+        // Modal Logic
+        function openModal(id) {
+            document.getElementById(id).style.display = 'block';
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).style.display = 'none';
+        }
+
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = 'none';
+            }
+        }
+
+        // Edit Logic for Composite Key
+        function openEditModal(cat) {
+            document.getElementById('edit_id').value = cat.id;
+            document.getElementById('edit_type').value = cat.type;
+            document.getElementById('edit_name').value = cat.cat_name;
+            document.getElementById('edit_org').value = cat.organization;
+            document.getElementById('edit_notes').value = cat.notes;
+
+            // Build Route: /categories/{id}/{type}
+            let url = "{{ route('categories.update', [':id', ':type']) }}";
+            url = url.replace(':id', cat.id).replace(':type', encodeURIComponent(cat.type));
+
+            document.getElementById('editForm').action = url;
+            openModal('editModal');
+        }
+
+        // Delete Logic for Composite Key
+        function openDeleteModal(id, type) {
+            let url = "{{ route('categories.destroy', [':id', ':type']) }}";
+            url = url.replace(':id', id).replace(':type', encodeURIComponent(type));
+
+            document.getElementById('deleteForm').action = url;
+            openModal('deleteModal');
+        }
+
+        // Toast Logic
+        function showToast(message, type) {
+            var x = document.getElementById("toast");
+            x.textContent = message;
+            x.className = "toast show " + type;
+            setTimeout(function() {
+                x.className = x.className.replace("show", "");
+            }, 3000);
+        }
+
+        // Trigger Toast from Session
+        @if (session('success'))
+            showToast("{{ session('success') }}", "success");
+        @endif
+        @if (session('error'))
+            showToast("{{ session('error') }}", "error");
+        @endif
+        @if ($errors->any())
+            showToast("يوجد خطأ في البيانات المدخلة", "error");
+        @endif
+    </script>
 </body>
 
 </html>

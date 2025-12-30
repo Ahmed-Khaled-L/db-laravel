@@ -7,6 +7,7 @@ use App\Models\Department;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\QueryException;
 
 class EmployeeController extends Controller
 {
@@ -14,7 +15,6 @@ class EmployeeController extends Controller
     {
         $query = Employee::with("department");
 
-        // Search (Name, SSN, Job)
         if ($request->filled("search")) {
             $search = $request->search;
             $query->where(function ($q) use ($search) {
@@ -24,15 +24,14 @@ class EmployeeController extends Controller
             });
         }
 
-        // Filter by Department
         if ($request->filled("department_id")) {
             $query->where("department_id", $request->department_id);
         }
 
-        $employees = $query->orderBy("name")->paginate(20);
+        $employees = $query->orderBy("id", "desc")->paginate(20);
         $departments = Department::all();
 
-        // Attach mobile number manually for display
+        // Attach mobile manually
         foreach ($employees as $emp) {
             $emp->mobile = DB::table("employee_mobiles")
                 ->where("employee_id", $emp->id)
@@ -70,19 +69,14 @@ class EmployeeController extends Controller
             }
         });
 
-        return redirect()
-            ->route("employees.index")
-            ->with("success", "تم إضافة الموظف بنجاح.");
+        return redirect()->route("employees.index")->with("success", "تم إضافة الموظف بنجاح.");
     }
 
     public function update(Request $request, Employee $employee)
     {
         $data = $request->validate([
             "name" => "required|string|max:255",
-            "ssn" => [
-                "required",
-                Rule::unique("employees")->ignore($employee->id),
-            ],
+            "ssn" => ["required", Rule::unique("employees")->ignore($employee->id)],
             "job_title" => "required|string|max:255",
             "birth_date" => "required|date",
             "department_id" => "required|exists:departments,id",
@@ -98,11 +92,8 @@ class EmployeeController extends Controller
                 "department_id" => $data["department_id"],
             ]);
 
-            // Update mobile: delete old, insert new
             if (isset($data["mobile"])) {
-                DB::table("employee_mobiles")
-                    ->where("employee_id", $employee->id)
-                    ->delete();
+                DB::table("employee_mobiles")->where("employee_id", $employee->id)->delete();
                 if (!empty($data["mobile"])) {
                     DB::table("employee_mobiles")->insert([
                         "employee_id" => $employee->id,
@@ -112,16 +103,20 @@ class EmployeeController extends Controller
             }
         });
 
-        return redirect()
-            ->route("employees.index")
-            ->with("success", "تم تحديث بيانات الموظف.");
+        return redirect()->route("employees.index")->with("success", "تم تحديث بيانات الموظف.");
     }
 
     public function destroy(Employee $employee)
     {
-        $employee->delete();
-        return redirect()
-            ->route("employees.index")
-            ->with("success", "تم حذف الموظف.");
+        try {
+            $employee->delete();
+            return redirect()->route("employees.index")->with("success", "تم حذف الموظف.");
+        } catch (QueryException $e) {
+            // Check for integrity constraint violation (e.g., employee manages a store)
+            if ($e->getCode() == "23000") {
+                return redirect()->route("employees.index")->with("error", "لا يمكن حذف الموظف لأنه مرتبط بعهدة أو مخزن.");
+            }
+            return redirect()->route("employees.index")->with("error", "حدث خطأ أثناء الحذف.");
+        }
     }
 }
