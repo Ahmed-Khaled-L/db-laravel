@@ -93,6 +93,16 @@ Route::get('/custody/personnel', [PersonnelCustodyController::class, 'index'])->
 Route::get('/custody/personnel/create', [PersonnelCustodyController::class, 'create'])->name('custody.personnel.create');
 Route::post('/custody/personnel', [PersonnelCustodyController::class, 'store'])->name('custody.personnel.store');
 
+// NEW: Edit, Update, and Delete Routes
+Route::get('/custody/personnel/{id}/edit', [PersonnelCustodyController::class, 'edit'])->name('custody.personnel.edit');
+Route::put('/custody/personnel/{id}', [PersonnelCustodyController::class, 'update'])->name('custody.personnel.update');
+Route::delete('/custody/personnel/{id}', [PersonnelCustodyController::class, 'destroy'])->name('custody.personnel.destroy');
+
+// NEW: Routes for handling Details CRUD from the Index Modal
+Route::post('/custody/details/single/{auditId}', [PersonnelCustodyController::class, 'storeSingleDetail'])->name('custody.details.storeSingle');
+Route::put('/custody/details/single/update', [PersonnelCustodyController::class, 'updateSingleDetail'])->name('custody.details.updateSingle');
+Route::delete('/custody/details/single/delete', [PersonnelCustodyController::class, 'destroySingleDetail'])->name('custody.details.destroySingle');
+
 // Details Steps
 Route::get('/custody/details/{auditId}', [PersonnelCustodyController::class, 'createDetails'])->name('custody.details.create');
 Route::post('/custody/details/{auditId}', [PersonnelCustodyController::class, 'storeDetails'])->name('custody.details.store');

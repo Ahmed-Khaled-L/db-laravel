@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class CustodyAuditBase extends Model
 {
@@ -33,5 +34,11 @@ class CustodyAuditBase extends Model
     public function personnelDetail(): HasOne
     {
         return $this->hasOne(PersonnelCustodyAudit::class, "id");
+    }
+
+    // NEW: Relationship to fetch details for the modal
+    public function itemDetails(): HasMany
+    {
+        return $this->hasMany(ItemDetails::class, 'custody_audit_id');
     }
 }

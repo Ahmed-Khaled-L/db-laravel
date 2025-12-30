@@ -30,8 +30,10 @@ class PersonnelCustodyAudit extends Model
         return $this->belongsTo(Employee::class);
     }
 
-    // Custom relationship for Composite Key Category
-    // Note: Laravel standard relationships struggle with composite keys slightly,
-    // but we can query it manually or use a trait if needed.
-    // For now, we will handle the saving logic in the controller.
+    public function getCategoryAttribute()
+    {
+        return Category::where('id', $this->category_id)
+            ->where('type', $this->category_type)
+            ->first();
+    }
 }

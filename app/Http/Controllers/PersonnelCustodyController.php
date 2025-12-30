@@ -15,11 +15,11 @@ use App\Models\ItemDetails;
 
 class PersonnelCustodyController extends Controller
 {
-    // ... index method remains the same ...
     public function index()
     {
+        // Eager load 'itemDetails' so we can pass them to the modal
         $audits = CustodyAuditBase::where('audit_type', 'Personnel')
-            ->with(['personnelDetail.employee', 'item', 'register'])
+            ->with(['personnelDetail.employee', 'item', 'register', 'itemDetails'])
             ->latest()
             ->get();
         return view('custody.personnel.index', compact('audits'));
@@ -30,11 +30,7 @@ class PersonnelCustodyController extends Controller
         $registers = Register::all();
         $items = Item::all();
         $employees = Employee::all();
-
-        // Pass all categories; we will filter them with JS
         $categories = Category::all();
-
-        // Extract unique Types for the first dropdown
         $types = $categories->pluck('type')->unique();
 
         return view('custody.personnel.create', compact('registers', 'items', 'employees', 'categories', 'types'));
@@ -52,23 +48,20 @@ class PersonnelCustodyController extends Controller
             'category_type' => 'required',
             'quantity' => 'required|integer|min:1',
             'notes' => 'nullable|string',
-            'add_details' => 'nullable|boolean', // Checkbox to add details
+            'add_details' => 'nullable|boolean',
         ]);
 
         $auditId = DB::transaction(function () use ($validated) {
-
-            // 1. Ensure Register Page Exists (Store ID is NULL for Personnel)
             RegisterPage::firstOrCreate(
                 [
                     'register_id' => $validated['register_id'],
                     'page_number' => $validated['page_no']
                 ],
                 [
-                    'store_id' => null // Explicitly null as requested
+                    'store_id' => null
                 ]
             );
 
-            // 2. Create Base Audit Record (Date is NOW)
             $base = CustodyAuditBase::create([
                 'date' => now(),
                 'unit_price' => $validated['unit_price'],
@@ -79,7 +72,6 @@ class PersonnelCustodyController extends Controller
                 'notes' => $validated['notes'],
             ]);
 
-            // 3. Create Personnel Specific Record
             PersonnelCustodyAudit::create([
                 'id' => $base->id,
                 'employee_id' => $validated['employee_id'],
@@ -91,7 +83,6 @@ class PersonnelCustodyController extends Controller
             return $base->id;
         });
 
-        // Redirect based on user choice
         if ($request->has('add_details') && $request->add_details == 1) {
             return redirect()->route('custody.details.create', ['auditId' => $auditId]);
         }
@@ -99,7 +90,93 @@ class PersonnelCustodyController extends Controller
         return redirect()->route('custody.personnel.index')->with('success', 'تم إضافة العهدة بنجاح');
     }
 
-    // --- ITEM DETAILS METHODS ---
+    public function edit($id)
+    {
+        $audit = CustodyAuditBase::with(['personnelDetail', 'register', 'item'])->findOrFail($id);
+
+        // Ensure this is a Personnel audit
+        if ($audit->audit_type !== 'Personnel') {
+            return redirect()->route('custody.personnel.index')->with('error', 'هذا السجل ليس عهدة شخصية');
+        }
+
+        $registers = Register::all();
+        $items = Item::all();
+        $employees = Employee::all();
+        $categories = Category::all();
+        $types = $categories->pluck('type')->unique();
+
+        return view('custody.personnel.edit', compact('audit', 'registers', 'items', 'employees', 'categories', 'types'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $audit = CustodyAuditBase::findOrFail($id);
+
+        $validated = $request->validate([
+            'register_id' => 'required|exists:registers,id',
+            'page_no' => 'required|integer|min:1',
+            'item_id' => 'required|exists:items,id',
+            'unit_price' => 'required|numeric|min:0',
+            'employee_id' => 'required|exists:employees,id',
+            'category_id' => 'required',
+            'category_type' => 'required',
+            'quantity' => 'required|integer|min:1',
+            'notes' => 'nullable|string',
+        ]);
+
+        DB::transaction(function () use ($validated, $audit) {
+
+            // 1. Ensure Register Page Exists
+            RegisterPage::firstOrCreate(
+                [
+                    'register_id' => $validated['register_id'],
+                    'page_number' => $validated['page_no']
+                ],
+                [
+                    'store_id' => null
+                ]
+            );
+
+            // 2. Update Base Record
+            $audit->update([
+                'unit_price' => $validated['unit_price'],
+                'register_id' => $validated['register_id'],
+                'page_no' => $validated['page_no'],
+                'item_id' => $validated['item_id'],
+                'notes' => $validated['notes'],
+            ]);
+
+            // 3. Update Personnel Specific Record
+            $audit->personnelDetail()->update([
+                'employee_id' => $validated['employee_id'],
+                'quantity' => $validated['quantity'],
+                'category_id' => $validated['category_id'],
+                'category_type' => $validated['category_type'],
+            ]);
+        });
+
+        return redirect()->route('custody.personnel.index')->with('success', 'تم تحديث العهدة بنجاح');
+    }
+
+    public function destroy($id)
+    {
+        try {
+            DB::transaction(function () use ($id) {
+                // Delete related Item Details first (if any)
+                ItemDetails::where('custody_audit_id', $id)->delete();
+
+                // Delete the sub-table entry
+                PersonnelCustodyAudit::where('id', $id)->delete();
+
+                // Delete the base table entry
+                CustodyAuditBase::where('id', $id)->delete();
+            });
+
+            return redirect()->route('custody.personnel.index')->with('success', 'تم حذف العهدة بنجاح');
+        } catch (\Exception $e) {
+            return redirect()->route('custody.personnel.index')->with('error', 'حدث خطأ أثناء الحذف: ' . $e->getMessage());
+        }
+    }
 
     public function createDetails($auditId)
     {
@@ -113,7 +190,7 @@ class PersonnelCustodyController extends Controller
     {
         $request->validate([
             'details' => 'required|array',
-            'details.*.serial_no' => 'required|string|distinct|unique:item_details,serial_no', // Ensure unique serials
+            'details.*.serial_no' => 'required|string|distinct|unique:item_details,serial_no',
             'details.*.expiry_date' => 'nullable|date',
         ]);
 
@@ -126,5 +203,68 @@ class PersonnelCustodyController extends Controller
         }
 
         return redirect()->route('custody.personnel.index')->with('success', 'تم إضافة تفاصيل الأصناف بنجاح');
+    }
+
+
+    public function storeSingleDetail(Request $request, $auditId)
+    {
+        $request->validate([
+            'serial_no' => 'required|string|distinct|unique:item_details,serial_no',
+            'expiry_date' => 'nullable|date',
+        ]);
+
+        ItemDetails::create([
+            'custody_audit_id' => $auditId,
+            'serial_no' => $request->serial_no,
+            'expiry_date' => $request->expiry_date,
+        ]);
+
+        return back()->with('success', 'تم إضافة تفاصيل الصنف بنجاح');
+    }
+
+    public function updateSingleDetail(Request $request)
+    {
+        // We use 'original_serial_no' to find the record because serial_no is the Primary Key
+        $originalSerial = $request->input('original_serial_no');
+
+        $request->validate([
+            'original_serial_no' => 'required|exists:item_details,serial_no',
+            'serial_no' => 'required|string',
+            'expiry_date' => 'nullable|date',
+        ]);
+
+        $detail = ItemDetails::where('serial_no', $originalSerial)->firstOrFail();
+
+        // Check uniqueness if serial changed
+        if ($request->serial_no !== $originalSerial) {
+            if (ItemDetails::where('serial_no', $request->serial_no)->exists()) {
+                return back()->with('error', 'السيريال الجديد موجود بالفعل لمنتج آخر.');
+            }
+        }
+
+        DB::transaction(function () use ($detail, $request, $originalSerial) {
+            // Since PK can't easily be updated, if it changes, we create new and delete old
+            if ($request->serial_no !== $originalSerial) {
+                ItemDetails::create([
+                    'custody_audit_id' => $detail->custody_audit_id,
+                    'serial_no' => $request->serial_no,
+                    'expiry_date' => $request->expiry_date,
+                ]);
+                $detail->delete();
+            } else {
+                $detail->update([
+                    'expiry_date' => $request->expiry_date,
+                ]);
+            }
+        });
+
+        return back()->with('success', 'تم تحديث التفاصيل بنجاح');
+    }
+
+    public function destroySingleDetail(Request $request)
+    {
+        $serial = $request->input('serial_no');
+        ItemDetails::where('serial_no', $serial)->delete();
+        return back()->with('success', 'تم حذف التفاصيل بنجاح');
     }
 }

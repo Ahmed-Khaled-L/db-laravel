@@ -145,7 +145,7 @@
 
                 <div class="db-card" onclick="location.href='{{ route('categories.index') }}'">
                     <i data-lucide="list" size="24"></i>
-                    <span>البنود (التصنيفات)</span>
+                    <span>البنود</span>
                 </div>
 
                 <div class="db-card" onclick="location.href='{{ route('items.index') }}'">
@@ -156,6 +156,16 @@
                 <div class="db-card" onclick="location.href='{{ route('custody.personnel.index') }}'">
                     <i data-lucide="user-check" size="24"></i>
                     <span>عهد شخصية</span>
+                </div>
+
+                <div class="db-card" onclick="location.href='{{ route('custody.personnel.index') }}'">
+                    <i data-lucide="user-check" size="24"></i>
+                    <span>جرد المخازن</span>
+                </div>
+
+                <div class="db-card" onclick="location.href='{{ route('custody.personnel.index') }}'">
+                    <i data-lucide="user-check" size="24"></i>
+                    <span>الأصول</span>
                 </div>
 
                 <div class="back-container">
