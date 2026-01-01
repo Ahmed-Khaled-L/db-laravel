@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
             EmployeeSeeder::class,
             RegisterSeeder::class,
             InventoryScenarioSeeder::class,
+            AssetSeeder::class,
             // RealDataSeeder::class, // Uncomment this when you have the file ready
             // UserSeeder::class,
         ]);
