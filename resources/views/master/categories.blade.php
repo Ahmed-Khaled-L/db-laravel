@@ -23,7 +23,7 @@
 
     <main class="main">
         <div class="title">
-            <h2>البنود (Categories)</h2>
+            <h2>البنود</h2>
         </div>
 
         <div id="toast" class="toast"></div>
@@ -88,7 +88,7 @@
             <form action="{{ route('categories.store') }}" method="POST">
                 @csrf
                 <div class="form-group">
-                    <label>رقم البند (ID)</label>
+                    <label>رقم البند</label>
                     <input type="number" name="id" required>
                 </div>
                 <div class="form-group">

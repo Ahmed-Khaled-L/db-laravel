@@ -120,7 +120,7 @@
 
                     {{-- NEW: Category Fields --}}
                     <div class="form-group">
-                        <label>نوع البند (Category Type)</label>
+                        <label>نوع البند</label>
                         <select id="catTypeSelect" name="category_type" required onchange="filterCategories()">
                             <option value="">-- اختر النوع --</option>
                             @foreach ($types as $type)
@@ -129,7 +129,7 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>اسم البند (Category Name)</label>
+                        <label>اسم البند</label>
                         <select id="catNameSelect" name="category_id" required>
                             <option value="">-- اختر البند --</option>
                         </select>
@@ -137,7 +137,7 @@
 
                     <div class="section-title">حالة الجرد</div>
                     <div class="form-group">
-                        <label>العدد الفعلي (Observed)</label>
+                        <label>الموجود من واقع الجرد</label>
                         <input type="number" name="observed_quantity" min="0" required>
                     </div>
                     <div class="form-group">
@@ -145,7 +145,7 @@
                         <input type="text" name="observed_state" placeholder="مثال: جيد، تالف..." required>
                     </div>
                     <div class="form-group">
-                        <label>العدد الدفتري (Booked)</label>
+                        <label>الرصيد الدفتري</label>
                         <input type="number" name="booked_quantity" min="0" required>
                     </div>
                     <div class="form-group">

@@ -24,7 +24,7 @@
         <div id="toast" class="toast"></div>
 
         <div class="title">
-            <h2>الأصناف (Items)</h2>
+            <h2>الأصناف</h2>
         </div>
 
         <div class="filter-bar">

@@ -25,7 +25,7 @@
         <div id="toast" class="toast"></div>
 
         <div class="title">
-            <h2>الموظفين (Employees)</h2>
+            <h2>الموظفين</h2>
         </div>
 
         <div class="filter-bar">

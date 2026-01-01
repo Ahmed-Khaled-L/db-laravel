@@ -170,7 +170,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label>نوع البند (Category Type)</label>
+                        <label>نوع البند</label>
                         <select id="catTypeSelect" name="category_type" required onchange="filterCategories()">
                             <option value="">-- اختر النوع --</option>
                             @foreach ($types as $type)
@@ -180,7 +180,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label>اسم البند (Category Name)</label>
+                        <label>اسم البند</label>
                         <select id="catNameSelect" name="category_id" required>
                             <option value="">-- اختر البند --</option>
                         </select>

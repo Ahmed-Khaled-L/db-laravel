@@ -134,7 +134,7 @@
         <button onclick="window.print()" class="print-btn" style="float: left;">طباعة التقرير</button>
 
         <div class="header">
-            <h1>تقرير الجرد السنوي للعهد</h1>
+            <h1>تقرير الجرد السنوي للعهد </h1>
             <p>كلية الهندسة بشبرا - تاريخ التقرير: {{ date('Y-m-d') }}</p>
         </div>
 

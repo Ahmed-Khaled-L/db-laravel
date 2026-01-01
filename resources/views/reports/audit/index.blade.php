@@ -155,7 +155,7 @@
                 @endif
 
                 <div class="form-group">
-                    <label>بند رقم (Category)</label>
+                    <label>بند رقم</label>
                     <select name="category_id" class="form-select">
                         <option value="">-- جميع البنود --</option>
                         @foreach ($categories as $cat)

@@ -146,7 +146,7 @@
 
                     <div class="section-title">حالة الجرد (الكميات)</div>
                     <div class="form-group">
-                        <label>العدد الفعلي (Observed)</label>
+                        <label>الموجود من واقع الجرد</label>
                         <input type="number" name="observed_quantity"
                             value="{{ $audit->inventoryDetail->observed_quantity }}" min="0" required>
                     </div>
@@ -157,7 +157,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label>العدد الدفتري (Booked)</label>
+                        <label>العدد الدفتري</label>
                         <input type="number" name="booked_quantity"
                             value="{{ $audit->inventoryDetail->booked_quantity }}" min="0" required>
                     </div>

@@ -200,7 +200,7 @@
         <div class="nav-container">
             <div>
                 <h1>إدارة العهد</h1>
-                <p>سجل عهدة المخازن (Inventory Custody)</p>
+                <p>سجل عهدة المخازن</p>
             </div>
             <button class="back-btn" onclick="location.href='{{ route('dashboard') }}'">الرئيسية</button>
         </div>

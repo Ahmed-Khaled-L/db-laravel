@@ -333,7 +333,7 @@
         <div class="nav-container">
             <div>
                 <h1>إدارة العهد</h1>
-                <p>سجل العهد الشخصية (Personnel Custody)</p>
+                <p>سجل العهد الشخصية</p>
             </div>
             <button class="back-btn" onclick="location.href='{{ route('dashboard') }}'">
                 الرئيسية
@@ -361,7 +361,7 @@
             <table class="data-table">
                 <thead>
                     <tr>
-                        <th>رقم (ID)</th>
+                        <th>رقم</th>
                         <th>كود الصنف</th>
                         <th>اسم الصنف</th>
                         <th>العدد</th>

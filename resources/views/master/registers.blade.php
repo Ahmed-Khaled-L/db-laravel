@@ -25,7 +25,7 @@
         <div id="toast" class="toast"></div>
 
         <div class="title">
-            <h2>السجلات (Registers)</h2>
+            <h2>السجلات</h2>
         </div>
 
         <div class="filter-bar">

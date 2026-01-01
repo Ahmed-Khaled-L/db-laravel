@@ -23,7 +23,7 @@
 
     <main class="main">
         <div class="title">
-            <h2>الأصول (Assets)</h2>
+            <h2>الأصول</h2>
         </div>
 
         <div id="toast" class="toast"></div>
@@ -38,7 +38,7 @@
             <table>
                 <thead>
                     <tr>
-                        <th>مسلسل (ID)</th>
+                        <th>مسلسل</th>
                         <th>البيان (اسم الأصل)</th>
                         <th>القيمة</th>
                         <th>إجراءات</th>
@@ -76,7 +76,7 @@
             <form action="{{ route('assets.store') }}" method="POST">
                 @csrf
                 <div class="form-group">
-                    <label>مسلسل (ID)</label>
+                    <label>مسلسل</label>
                     <input type="number" name="id" required placeholder="مثال: 1">
                 </div>
                 <div class="form-group">
@@ -104,7 +104,7 @@
             <form id="editForm" method="POST">
                 @csrf @method('PUT')
                 <div class="form-group">
-                    <label>مسلسل (ID)</label>
+                    <label>مسلسل</label>
                     <input type="number" name="id" id="edit_id" required>
                 </div>
                 <div class="form-group">
