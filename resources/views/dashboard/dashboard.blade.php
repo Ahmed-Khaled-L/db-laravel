@@ -90,7 +90,7 @@
                 <span class="arrow">➜</span>
             </div>
 
-            <div class="card" onclick="alert('صفحة التقارير')">
+            <div class="card" onclick="location.href='{{ route('reports.custody') }}'">
                 <div class="icon-wrapper bg-purple"><i data-lucide="bar-chart-3" size="28"></i></div>
                 <h3>إنشاء تقارير</h3>
                 <p>طباعة تقارير الجرد</p>

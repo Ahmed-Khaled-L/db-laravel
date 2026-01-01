@@ -12,6 +12,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PersonnelCustodyController;
 use App\Http\Controllers\InventoryCustodyController;
+use App\Http\Controllers\ReportController;
 
 // --- Dashboard ---
 Route::get("/", [DashboardController::class, "index"])->name("dashboard");
@@ -124,3 +125,5 @@ Route::delete('/custody/inventory/{id}', [InventoryCustodyController::class, 'de
 Route::get('/custody/inventory/details/{auditId}', [InventoryCustodyController::class, 'createDetails'])->name('custody.inventory.details');
 // Note: storeDetails method in InventoryController for bulk add
 Route::post('/custody/inventory/details/{auditId}', [InventoryCustodyController::class, 'storeDetails'])->name('custody.inventory.storeDetails');
+
+Route::get('/reports/custody', [ReportController::class, 'custodyReport'])->name('reports.custody');
