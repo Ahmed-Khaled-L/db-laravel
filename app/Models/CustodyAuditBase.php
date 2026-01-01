@@ -36,6 +36,11 @@ class CustodyAuditBase extends Model
         return $this->hasOne(PersonnelCustodyAudit::class, "id");
     }
 
+    // NEW: Relationship for Inventory Custody
+    public function inventoryDetail(): HasOne
+    {
+        return $this->hasOne(InventoryAudit::class, "id");
+    }
     // NEW: Relationship to fetch details for the modal
     public function itemDetails(): HasMany
     {

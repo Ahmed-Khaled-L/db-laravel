@@ -403,7 +403,7 @@
                             <td>{{ $deptName }}</td>
                             <td style="max-width: 150px; overflow: hidden; text-overflow: ellipsis;">
                                 {{ $audit->notes }}</td>
-                            <td>{{ $audit->date }}</td>
+                            <td>{{ $audit->created_at->format('Y-m-d') }}</td>
                             <td style="display:flex; gap:8px; justify-content:center; align-items:center;">
                                 <button class="btn-action btn-secondary-small"
                                     onclick='openDetailsModal({{ $detailsJson }}, {{ $audit->id }}, "{{ $audit->item->item_name ?? 'غير محدد' }}")'

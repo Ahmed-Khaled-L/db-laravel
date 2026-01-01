@@ -158,7 +158,7 @@
                     <span>عهد شخصية</span>
                 </div>
 
-                <div class="db-card" onclick="location.href='{{ route('custody.personnel.index') }}'">
+                <div class="db-card" onclick="location.href='{{ route('custody.inventory.index') }}'">
                     <i data-lucide="user-check" size="24"></i>
                     <span>جرد المخازن</span>
                 </div>

@@ -8,12 +8,14 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Item;
 use App\Models\Store;
 use App\Models\Employee;
-use App\Models\Department; // Import Department
+use App\Models\Department;
 use App\Models\Register;
 use App\Models\RegisterPage;
 use App\Models\CustodyAuditBase;
 use App\Models\InventoryAudit;
 use App\Models\User;
+use App\Models\Category;           // Imported
+use App\Models\StoreItemMapping;   // Imported
 use Illuminate\Support\Facades\Hash;
 
 class InventoryScenarioSeeder extends Seeder
@@ -24,6 +26,9 @@ class InventoryScenarioSeeder extends Seeder
         Schema::disableForeignKeyConstraints();
         InventoryAudit::truncate();
         CustodyAuditBase::truncate();
+        StoreItemMapping::truncate(); // Clean up mappings
+        // Note: We are not truncating Categories/Stores/Items here to avoid breaking other seeders if run combined, 
+        // but this specific scenario handles 'firstOrCreate' logic safely.
         Schema::enableForeignKeyConstraints();
 
         // 2. Setup Prerequisites
@@ -31,7 +36,6 @@ class InventoryScenarioSeeder extends Seeder
             "register_name" => "سجل الجرد السنوي",
         ]);
 
-        // FIX: Ensure a default Department exists
         $defaultDept = Department::firstOrCreate(["name" => "الإدارة العامة"]);
 
         // 3. The Dataset
@@ -759,7 +763,7 @@ class InventoryScenarioSeeder extends Seeder
             $bookedQty = $row[4];
             $price = $row[5];
             $empName = $row[6];
-            $categoryId = $row[7];
+            $categoryId = $row[7]; // ID from Data
             $storeName = $row[8];
             $custodyType = $row[9];
             $pageNoStr = $row[10];
@@ -800,7 +804,27 @@ class InventoryScenarioSeeder extends Seeder
                 ],
             );
 
-            // FIX: Ensure Register Page Exists (Resolves FK Constraint Error)
+            // D. Ensure Category Exists (Using the provided ID)
+            $category = Category::firstOrCreate(
+                ['id' => $categoryId],
+                [
+                    'cat_name' => 'بند ' . $categoryId, // Fallback name
+                    'type' => 'مخزني عام'
+                ]
+            );
+
+            // E. Create Store-Item Mapping
+            StoreItemMapping::firstOrCreate(
+                [
+                    'store_id' => $store->id,
+                    'item_id' => $item->id
+                ],
+                [
+                    'category_id' => $category->id
+                ]
+            );
+
+            // F. Ensure Register Page Exists
             RegisterPage::firstOrCreate(
                 [
                     "register_id" => $register->id,
@@ -811,7 +835,7 @@ class InventoryScenarioSeeder extends Seeder
                 ],
             );
 
-            // D. Create Custody Audit Base
+            // G. Create Custody Audit Base
             $auditBase = CustodyAuditBase::create([
                 "date" => now(),
                 "unit_price" => $price,
@@ -821,7 +845,7 @@ class InventoryScenarioSeeder extends Seeder
                 "audit_type" => "Inventory",
             ]);
 
-            // E. Create Inventory Audit
+            // H. Create Inventory Audit
             InventoryAudit::create([
                 "id" => $auditBase->id,
                 "store_id" => $store->id,

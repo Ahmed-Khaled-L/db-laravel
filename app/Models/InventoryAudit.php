@@ -9,12 +9,12 @@ class InventoryAudit extends Model
 {
     protected $table = "inventory_audits";
 
-    // Important: The ID is shared with CustodyAuditBase, so auto-increment is OFF
+    // Important: ID is shared with CustodyAuditBase, so auto-increment is OFF
     public $incrementing = false;
     protected $primaryKey = "id";
 
     protected $fillable = [
-        "id", // Must fill this manually with the Base ID
+        "id", // Manually set to match Base ID
         "store_id",
         "observed_quantity",
         "booked_quantity",

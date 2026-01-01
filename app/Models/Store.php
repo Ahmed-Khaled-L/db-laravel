@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Store extends Model
 {
-    // Ensure we are filling the correct fields
     protected $fillable = [
         "code",
         "name",
@@ -17,17 +17,23 @@ class Store extends Model
         "custody_type",
     ];
 
-    // IMPORTANT: If you had 'getRouteKeyName' here before, REMOVE IT.
-    // We want Laravel to use the default 'id' for finding records.
-
     public function manager(): BelongsTo
     {
         return $this->belongsTo(Employee::class, "responsible_employee_id");
     }
 
+    // Existing relationship (Requires the StoreItemMapping model created above)
     public function itemMappings(): HasMany
     {
         return $this->hasMany(StoreItemMapping::class);
+    }
+
+    // NEW: Easy access to Items directly
+    public function items(): BelongsToMany
+    {
+        return $this->belongsToMany(Item::class, 'store_item_mappings', 'store_id', 'item_id')
+            ->withPivot('category_id')
+            ->withTimestamps();
     }
 
     public function registerPages(): HasMany

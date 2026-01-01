@@ -11,6 +11,7 @@ use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PersonnelCustodyController;
+use App\Http\Controllers\InventoryCustodyController;
 
 // --- Dashboard ---
 Route::get("/", [DashboardController::class, "index"])->name("dashboard");
@@ -45,6 +46,9 @@ Route::resource("employees", EmployeeController::class)->except([
 // Stores
 // FIXED: Removed 'create' and 'edit' from except() so the Add/Edit pages work
 Route::resource("stores", StoreController::class)->except(["show"]);
+
+Route::post('stores/{id}/assign-item', [StoreController::class, 'assignItem'])->name('stores.assignItem');
+Route::delete('stores/{id}/remove-item/{itemId}', [StoreController::class, 'removeItem'])->name('stores.removeItem');
 
 // Registers
 Route::resource("registers", RegisterController::class)->except([
@@ -106,3 +110,17 @@ Route::delete('/custody/details/single/delete', [PersonnelCustodyController::cla
 // Details Steps
 Route::get('/custody/details/{auditId}', [PersonnelCustodyController::class, 'createDetails'])->name('custody.details.create');
 Route::post('/custody/details/{auditId}', [PersonnelCustodyController::class, 'storeDetails'])->name('custody.details.store');
+
+
+// Inventory Custody Routes
+Route::get('/custody/inventory', [InventoryCustodyController::class, 'index'])->name('custody.inventory.index');
+Route::get('/custody/inventory/create', [InventoryCustodyController::class, 'create'])->name('custody.inventory.create');
+Route::post('/custody/inventory', [InventoryCustodyController::class, 'store'])->name('custody.inventory.store');
+Route::get('/custody/inventory/{id}/edit', [InventoryCustodyController::class, 'edit'])->name('custody.inventory.edit');
+Route::put('/custody/inventory/{id}', [InventoryCustodyController::class, 'update'])->name('custody.inventory.update');
+Route::delete('/custody/inventory/{id}', [InventoryCustodyController::class, 'destroy'])->name('custody.inventory.destroy');
+
+// Inventory Details Steps (if using the multi-step page)
+Route::get('/custody/inventory/details/{auditId}', [InventoryCustodyController::class, 'createDetails'])->name('custody.inventory.details');
+// Note: storeDetails method in InventoryController for bulk add
+Route::post('/custody/inventory/details/{auditId}', [InventoryCustodyController::class, 'storeDetails'])->name('custody.inventory.storeDetails');
