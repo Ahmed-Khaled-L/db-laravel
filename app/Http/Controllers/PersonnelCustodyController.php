@@ -267,4 +267,15 @@ class PersonnelCustodyController extends Controller
         ItemDetails::where('serial_no', $serial)->delete();
         return back()->with('success', 'تم حذف التفاصيل بنجاح');
     }
+
+    // Add this method inside the class
+    public function inquiry()
+    {
+        $audits = CustodyAuditBase::where('audit_type', 'Personnel')
+            ->with(['personnelDetail.employee', 'item', 'register', 'itemDetails'])
+            ->latest()
+            ->get();
+
+        return view('custody.personnel.inquiry', compact('audits'));
+    }
 }

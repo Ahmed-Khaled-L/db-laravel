@@ -140,3 +140,8 @@ Route::get('/audit/report', [AuditReportController::class, 'index'])->name('audi
 
 Route::resource('assets', AssetController::class)->except(['create', 'show', 'edit']);
 Route::get('/reports/assets', [AssetController::class, 'report'])->name('reports.assets');
+
+
+// --- Inquiry Routes ---
+Route::get('/inquiry/inventory', [InventoryCustodyController::class, 'inquiry'])->name('inquiry.inventory');
+Route::get('/inquiry/personnel', [PersonnelCustodyController::class, 'inquiry'])->name('inquiry.personnel');

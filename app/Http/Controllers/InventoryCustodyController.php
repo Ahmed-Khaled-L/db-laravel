@@ -259,4 +259,16 @@ class InventoryCustodyController extends Controller
 
         return redirect()->route('custody.inventory.index')->with('success', 'تم إضافة تفاصيل الأصناف بنجاح');
     }
+
+    // Add this method inside the class
+    public function inquiry()
+    {
+        // Fetch data similar to index, but specifically for the inquiry view
+        $audits = CustodyAuditBase::where('audit_type', 'Inventory')
+            ->with(['inventoryDetail.store', 'item', 'register', 'itemDetails'])
+            ->latest()
+            ->get();
+
+        return view('custody.inventory.inquiry', compact('audits'));
+    }
 }

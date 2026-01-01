@@ -161,10 +161,10 @@
                 <span class="arrow">➜</span>
             </div>
 
-            <div class="card" onclick="alert('قسم الاستعلامات')">
+            <div class="card" onclick="openInquiryModal()">
                 <div class="icon-wrapper bg-teal"><i data-lucide="search" size="28"></i></div>
                 <h3>قسم الاستعلامات</h3>
-                <p>البحث عن الأصناف</p>
+                <p>البحث عن الأصناف والعهد</p>
                 <span class="arrow">➜</span>
             </div>
 
@@ -293,6 +293,43 @@
         window.onclick = function(event) {
             if (event.target == document.getElementById('auditModal')) {
                 closeAuditModal();
+            }
+        }
+    </script>
+
+
+    <div id="inquiryModal" class="modal-overlay">
+        <div class="modal-content fade-in">
+            <h3 style="margin-bottom: 20px;">اختر نوع الاستعلام</h3>
+
+            <a href="{{ route('inquiry.inventory') }}" class="modal-btn btn-main">
+                استعلام عهدة المخازن
+            </a>
+
+            <a href="{{ route('inquiry.personnel') }}" class="modal-btn btn-personnel">
+                استعلام العهد الشخصية
+            </a>
+
+            <button onclick="closeInquiryModal()" class="modal-btn btn-close">إغلاق</button>
+        </div>
+    </div>
+
+    <script>
+        function openInquiryModal() {
+            document.getElementById('inquiryModal').style.display = 'flex';
+        }
+
+        function closeInquiryModal() {
+            document.getElementById('inquiryModal').style.display = 'none';
+        }
+
+        // Update the window click listener to handle both modals
+        window.onclick = function(event) {
+            if (event.target == document.getElementById('auditModal')) {
+                closeAuditModal();
+            }
+            if (event.target == document.getElementById('inquiryModal')) {
+                closeInquiryModal();
             }
         }
     </script>
