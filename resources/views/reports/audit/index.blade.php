@@ -193,6 +193,19 @@
             <div class="center-title">
                 <p>( نموذج 6 مخازن حكومة )</p>
                 <h2>محضر جرد الاصناف</h2>
+                @switch($auditType)
+                    @case('main')
+                        <h3>( مخازن رئيسية )</ا>
+                        @break
+
+                        @case('branch')
+                            <h3>( عهد فرعية )</h3>
+                        @break
+
+                        @default
+                            <h3>( عهد شخصية )</h3>
+                    @endswitch
+
             </div>
 
             <div style="text-align: left;">

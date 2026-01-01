@@ -14,6 +14,7 @@ use App\Http\Controllers\PersonnelCustodyController;
 use App\Http\Controllers\InventoryCustodyController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\AuditReportController;
+use App\Http\Controllers\AssetController;
 
 // --- Dashboard ---
 Route::get("/", [DashboardController::class, "index"])->name("dashboard");
@@ -132,3 +133,10 @@ Route::get('/reports/custody', [ReportController::class, 'custodyReport'])->name
 
 
 Route::get('/audit/report', [AuditReportController::class, 'index'])->name('audit.report');
+
+
+
+
+
+Route::resource('assets', AssetController::class)->except(['create', 'show', 'edit']);
+Route::get('/reports/assets', [AssetController::class, 'report'])->name('reports.assets');

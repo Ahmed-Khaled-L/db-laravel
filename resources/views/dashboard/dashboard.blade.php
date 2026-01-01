@@ -118,17 +118,17 @@
 
         <div id="mainMenu" class="grid fade-in">
 
-            <div class="card" onclick="alert('صفحة إضافة عهدة')">
+            <div class="card" onclick="location.href='{{ route('custody.inventory.create') }}'">
                 <div class="icon-wrapper bg-blue"><i data-lucide="package-plus" size="28"></i></div>
                 <h3>إضافة عهدة</h3>
                 <p>تسجيل عهدة جديدة</p>
                 <span class="arrow">➜</span>
             </div>
 
-            <div class="card" onclick="alert('صفحة تعديل العهدة')">
+            <div class="card" onclick="location.href='{{ route('custody.inventory.index') }}'">
                 <div class="icon-wrapper bg-indigo"><i data-lucide="edit" size="28"></i></div>
                 <h3>تعديل حالة عهدة</h3>
-                <p>تحديث حالة المواد</p>
+                <p>تحديث حالة عهدة</p>
                 <span class="arrow">➜</span>
             </div>
 
@@ -139,25 +139,25 @@
                 <span class="arrow">➜</span>
             </div>
 
-            <div class="card" onclick="alert('صفحة المخزون')">
+            <div class="card" onclick="location.href='{{ route('assets.index') }}'">
                 <div class="icon-wrapper bg-emerald" style="opacity: 0.7;"><i data-lucide="box" size="28"></i>
                 </div>
-                <h3>المخزون الحالي</h3>
+                <h3>الأصول والممتلكات</h3>
                 <p>عرض الكميات الحالية</p>
                 <span class="arrow">➜</span>
             </div>
 
             <div class="card" onclick="location.href='{{ route('reports.custody') }}'">
                 <div class="icon-wrapper bg-purple"><i data-lucide="bar-chart-3" size="28"></i></div>
-                <h3>إنشاء تقارير</h3>
-                <p>طباعة تقارير الجرد</p>
+                <h3>تقرير الجرد السنوي للعهد</h3>
+                <p>طباعة الجرد السنوي للعهد</p>
                 <span class="arrow">➜</span>
             </div>
 
-            <div class="card" onclick="alert('صفحة المقايسة')">
+            <div class="card" onclick="location.href='{{ route('reports.assets') }}'">
                 <div class="icon-wrapper bg-orange"><i data-lucide="calculator" size="28"></i></div>
-                <h3>المقايسة السنوية</h3>
-                <p>حساب التقديرات السنوية</p>
+                <h3>بيان الأصول و الممتلكات</h3>
+                <p>طباعة تقرير الأصول و الممتلكات</p>
                 <span class="arrow">➜</span>
             </div>
 
