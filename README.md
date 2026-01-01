@@ -2,131 +2,213 @@
 
 A comprehensive web application built with **Laravel 12** designed to streamline the management of organizational assets, inventory, personnel custody, and store auditing. This system offers a centralized dashboard for tracking items, managing master data, and generating detailed custody reports.
 
+---
+
 ## 🚀 Features
 
 ### 1. Master Data Management
+
 Control the core entities of your organization with full CRUD capabilities:
-* **Items**: Maintain a central catalog of all trackable items.
-* **Categories**: Organize items with a hierarchical structure supporting composite keys (ID + Type).
-* **Departments**: Manage organizational units.
-* **Employees**: detailed staff records for custody assignment.
-* **Stores**: Manage warehouse locations and assign specific items to them.
-* **Registers**: Manage system registries.
+
+- **Items**: Maintain a central catalog of all trackable items.
+- **Categories**: Organize items with a hierarchical structure supporting composite keys (ID + Type).
+- **Departments**: Manage organizational units.
+- **Employees**: Detailed staff records for custody assignment.
+- **Stores**: Manage warehouse locations and assign specific items to them.
+- **Registers**: Manage system registries.
 
 ### 2. Custody & Inventory Operations
+
 Track the lifecycle and location of every item:
-* **Personnel Custody**: workflows for assigning items to employees, handling returns, and auditing current holdings.
-* **Inventory Custody**: Manage stock levels, audit store inventories, and track movements.
-* **Inquiry System**: Dedicated interfaces for quick lookup of inventory status and personnel custody history.
+
+- **Personnel Custody**: Workflows for assigning items to employees, handling returns, and auditing current holdings.
+- **Inventory Custody**: Manage stock levels, audit store inventories, and track movements.
+- **Inquiry System**: Dedicated interfaces for quick lookup of inventory status and personnel custody history.
 
 ### 3. Asset Management
-* **Asset Tracking**: Specialized module for managing long-term fixed assets.
-* **Reporting**: Generate status reports for assets.
+
+- **Asset Tracking**: Specialized module for managing long-term fixed assets.
+- **Reporting**: Generate status reports for assets.
 
 ### 4. Reporting & Auditing
-* **Custody Reports**: View detailed snapshots of who holds which items.
-* **Audit Logs**: Track changes and verify inventory accuracy.
+
+- **Custody Reports**: View detailed snapshots of who holds which items.
+- **Audit Logs**: Track changes and verify inventory accuracy.
 
 ---
 
 ## 🛠️ Tech Stack & Dependencies
 
-This project utilizes a modern stack for performance and developer experience:
+This project utilizes a modern stack for performance and developer experience.
 
 ### Backend
-* **PHP**: `^8.5`
-* **Framework**: `Laravel 12.0`
-* **Database**: MySQL / MariaDB (Standard Laravel support) / Sqlite
+- **PHP**: `^8.5`
+- **Framework**: Laravel `12.0`
+- **Database**: MySQL / MariaDB / SQLite (Default)
 
 ### Frontend
-* **Styling**: `Tailwind CSS ^4.0`
+- **Styling**: Tailwind CSS `^4.0`
+- **Vanilla JS**
 
 ---
 
 ## ⚙️ Installation & Setup
 
-### Prerequisites
-Ensure your environment meets the following requirements:
-* [PHP](https://www.php.net/) >= 8.5
-* [Composer](https://getcomposer.org/)
+We provide three ways to run this application. Choose the one that fits your needs.
 
-### Automated Setup (Recommended)
-This project includes a custom composer script that handles the entire setup process (dependencies, environment, keys, migrations, and frontend build).
+---
 
-1.  **Clone the repository**
-    ```bash
-    git clone [https://github.com/your-username/your-repo.git](https://github.com/your-username/your-repo.git)
-    cd your-repo
-    ```
+### Option 1: Windows "Clone & Run" ⚡ (Recommended)
 
-2.  **Run the setup command**
-    ```bash
-    composer run setup
-    ```
-    This single command performs the following:
-    1.  `composer install`: Installs PHP dependencies.
-    2.  Copies `.env.example` to `.env` (if it doesn't exist).
-    3.  `php artisan key:generate`: Generates the application key.
-    4.  `php artisan migrate --force`: Runs database migrations.
+For Windows users who have cloned the repository, we include a launcher script.
 
-### Manual Setup
-If you prefer to run steps individually:
+> ⚠️ **Prerequisite**: Docker Desktop must be installed and running.
 
-1.  **Install PHP Dependencies**
-    ```bash
-    composer install
-    ```
+**Clone the repository:**
+```bash
+git clone https://github.com/ahmed-khaled-l/db-laravel.git
+cd db-laravel
+````
 
-2.  **Environment Configuration**
-    ```bash
-    cp .env.example .env
-    php artisan key:generate
-    ```
-    *Note: Configure your database credentials in the `.env` file before migrating.*
+**Run the launcher:**
 
-3.  **Database Migration**
-    ```bash
-    php artisan migrate
-    ```
+- Double-click `docker_builder.bat`, or
     
-4.  **runs the Laravel server**
-    ```bash
-    php artisan serve
-    ```
+- Run the following command:
     
-5.  **Access the Application**
-   Open your browser and navigate to: http://localhost:8000
 
-6.  **Database Seeding**
-    ```bash
-    php artisan db:seed
-    ```
+```bash
+.\docker_builder.bat
+```
+
+**Access the App:**
+
+Once the environment is built, open:
+
+```
+http://localhost:8080
+```
+
+---
+
+### Option 2: Manual Docker (Mac/Linux) 🐳
+
+If you are on Mac/Linux or prefer running commands manually:
+
+**Clone the repository:**
+
+```bash
+git clone https://github.com/ahmed-khaled-l/db-laravel.git
+cd db-laravel
+```
+
+**Run Docker Compose:**
+
+```bash
+docker-compose up -d --build
+```
+
+> **Note**: This setup automatically handles database creation, migrations, seeding, and serving.
+
+**Access the App:**
+
+```
+http://localhost:8080
+```
+
+---
+
+### Option 3: Native Setup (Without Docker)
+
+If you prefer to run the application directly on your machine (requires PHP & Composer installed):
+
+**Install dependencies:**
+
+```bash
+composer install
+npm install && npm run build
+```
+
+**Configure environment:**
+
+```bash
+cp .env.example .env
+php artisan key:generate
+```
+
+**Setup database:**
+
+```bash
+touch database/database.sqlite
+php artisan migrate --force
+php artisan db:seed
+```
+
+**Run server:**
+
+```bash
+php artisan serve
+```
+
+---
 
 ## 📂 Project Structure
 
-* **`app/Http/Controllers`**
-    Core logic for Assets, Custody, Reports, and Master Data.
+```
+app/Http/Controllers
+```
 
-* **`routes/web.php`**
-    Route definitions for the Dashboard, Resources, and Reporting modules.
+Core logic for Assets, Custody, Reports, and Master Data.
 
-* **`resources/views`**
-    Blade templates for the user interface.
+```
+routes/web.php
+```
 
-* **`database/migrations`**
-    Schema definitions for the system tables.
+Route definitions for the Dashboard, Resources, and Reporting modules.
+
+```
+resources/views
+```
+
+Blade templates for the user interface.
+
+```
+database/migrations
+```
+
+Schema definitions for the system tables.
+
+---
 
 ## 🤝 Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
-1.  Fork the project
-2.  Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3.  Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4.  Push to the branch (`git push origin feature/AmazingFeature`)
-5.  Open a Pull Request
+1. Fork the project
+    
+2. Create your feature branch:
+    
+    ```bash
+    git checkout -b feature/AmazingFeature
+    ```
+    
+3. Commit your changes:
+    
+    ```bash
+    git commit -m 'Add some AmazingFeature'
+    ```
+    
+4. Push to the branch:
+    
+    ```bash
+    git push origin feature/AmazingFeature
+    ```
+    
+5. Open a Pull Request
+    
+
+---
 
 ## 📄 License
 
-The Laravel framework is open-sourced software licensed under the **[MIT license](https://opensource.org/licenses/MIT)**.
----
+The Laravel framework is open-sourced software licensed under the **MIT license**.
