@@ -14,8 +14,8 @@ use App\Models\RegisterPage;
 use App\Models\CustodyAuditBase;
 use App\Models\InventoryAudit;
 use App\Models\User;
-use App\Models\Category;           // Imported
-use App\Models\StoreItemMapping;   // Imported
+use App\Models\Category;
+use App\Models\StoreItemMapping;
 use Illuminate\Support\Facades\Hash;
 
 class InventoryScenarioSeeder extends Seeder
@@ -26,9 +26,7 @@ class InventoryScenarioSeeder extends Seeder
         Schema::disableForeignKeyConstraints();
         InventoryAudit::truncate();
         CustodyAuditBase::truncate();
-        StoreItemMapping::truncate(); // Clean up mappings
-        // Note: We are not truncating Categories/Stores/Items here to avoid breaking other seeders if run combined, 
-        // but this specific scenario handles 'firstOrCreate' logic safely.
+        StoreItemMapping::truncate();
         Schema::enableForeignKeyConstraints();
 
         // 2. Setup Prerequisites
@@ -39,7 +37,7 @@ class InventoryScenarioSeeder extends Seeder
         $defaultDept = Department::firstOrCreate(["name" => "الإدارة العامة"]);
 
         // 3. The Dataset
-        // Format: [Item Name, Unit, Observed Qty, State, Booked Qty, Unit Price, Emp Name, Category ID, Store Name, Custody Type, Page No]
+        // FIXED: Changed "مخزن رئيسى" to "مخزن رئيسي" (Ya instead of Alef Maqsura)
         $rows = [
             // --- الادوات الكتابية (Stationery) ---
             [
@@ -52,7 +50,7 @@ class InventoryScenarioSeeder extends Seeder
                 "محسن شعبان",
                 1,
                 "الأدوات الكتابية",
-                "مخزن رئيسى",
+                "مخزن رئيسي", // Fixed typo
                 "1*3",
             ],
             [
@@ -65,7 +63,7 @@ class InventoryScenarioSeeder extends Seeder
                 "محسن شعبان",
                 3,
                 "الأدوات الكتابية",
-                "مخزن رئيسى",
+                "مخزن رئيسي", // Fixed typo
                 "3*3",
             ],
             [
@@ -78,7 +76,7 @@ class InventoryScenarioSeeder extends Seeder
                 "محسن شعبان",
                 8,
                 "الأدوات الكتابية",
-                "مخزن رئيسى",
+                "مخزن رئيسي", // Fixed typo
                 "8*3",
             ],
             [
@@ -91,7 +89,7 @@ class InventoryScenarioSeeder extends Seeder
                 "محسن شعبان",
                 9,
                 "الأدوات الكتابية",
-                "مخزن رئيسى",
+                "مخزن رئيسي", // Fixed typo
                 "9*3",
             ],
             [
@@ -104,7 +102,7 @@ class InventoryScenarioSeeder extends Seeder
                 "محسن شعبان",
                 10,
                 "الأدوات الكتابية",
-                "مخزن رئيسى",
+                "مخزن رئيسي", // Fixed typo
                 "10*3",
             ],
             [
@@ -117,7 +115,7 @@ class InventoryScenarioSeeder extends Seeder
                 "محسن شعبان",
                 11,
                 "الأدوات الكتابية",
-                "مخزن رئيسى",
+                "مخزن رئيسي", // Fixed typo
                 "11*3",
             ],
             [
@@ -130,7 +128,7 @@ class InventoryScenarioSeeder extends Seeder
                 "محسن شعبان",
                 12,
                 "الأدوات الكتابية",
-                "مخزن رئيسى",
+                "مخزن رئيسي", // Fixed typo
                 "12*3",
             ],
             [
@@ -143,7 +141,7 @@ class InventoryScenarioSeeder extends Seeder
                 "محسن شعبان",
                 13,
                 "الأدوات الكتابية",
-                "مخزن رئيسى",
+                "مخزن رئيسي", // Fixed typo
                 "13*3",
             ],
             [
@@ -156,7 +154,7 @@ class InventoryScenarioSeeder extends Seeder
                 "محسن شعبان",
                 14,
                 "الأدوات الكتابية",
-                "مخزن رئيسى",
+                "مخزن رئيسي", // Fixed typo
                 "14*3",
             ],
             [
@@ -169,7 +167,7 @@ class InventoryScenarioSeeder extends Seeder
                 "محسن شعبان",
                 15,
                 "الأدوات الكتابية",
-                "مخزن رئيسى",
+                "مخزن رئيسي", // Fixed typo
                 "15*3",
             ],
             [
@@ -182,7 +180,7 @@ class InventoryScenarioSeeder extends Seeder
                 "محسن شعبان",
                 20,
                 "الأدوات الكتابية",
-                "مخزن رئيسى",
+                "مخزن رئيسي", // Fixed typo
                 "20*3",
             ],
             [
@@ -195,7 +193,7 @@ class InventoryScenarioSeeder extends Seeder
                 "محسن شعبان",
                 178,
                 "الأدوات الكتابية",
-                "مخزن رئيسى",
+                "مخزن رئيسي", // Fixed typo
                 "178*3",
             ],
             [
@@ -208,7 +206,7 @@ class InventoryScenarioSeeder extends Seeder
                 "محسن شعبان",
                 23,
                 "الأدوات الكتابية",
-                "مخزن رئيسى",
+                "مخزن رئيسي", // Fixed typo
                 "23*3",
             ],
             [
@@ -221,7 +219,7 @@ class InventoryScenarioSeeder extends Seeder
                 "محسن شعبان",
                 127,
                 "الأدوات الكتابية",
-                "مخزن رئيسى",
+                "مخزن رئيسي", // Fixed typo
                 "127*3",
             ],
             [
@@ -234,7 +232,7 @@ class InventoryScenarioSeeder extends Seeder
                 "محسن شعبان",
                 152,
                 "الأدوات الكتابية",
-                "مخزن رئيسى",
+                "مخزن رئيسي", // Fixed typo
                 "152*3",
             ],
             [
@@ -247,7 +245,7 @@ class InventoryScenarioSeeder extends Seeder
                 "محسن شعبان",
                 144,
                 "الأدوات الكتابية",
-                "مخزن رئيسى",
+                "مخزن رئيسي", // Fixed typo
                 "144*3",
             ],
             [
@@ -260,7 +258,7 @@ class InventoryScenarioSeeder extends Seeder
                 "محسن شعبان",
                 185,
                 "الأدوات الكتابية",
-                "مخزن رئيسى",
+                "مخزن رئيسي", // Fixed typo
                 "185*3",
             ],
             [
@@ -273,7 +271,7 @@ class InventoryScenarioSeeder extends Seeder
                 "محسن شعبان",
                 29,
                 "الأدوات الكتابية",
-                "مخزن رئيسى",
+                "مخزن رئيسي", // Fixed typo
                 "29*3",
             ],
 
@@ -288,7 +286,7 @@ class InventoryScenarioSeeder extends Seeder
                 "محسن شعبان",
                 1,
                 "الدفاتر المالية",
-                "مخزن رئيسى",
+                "مخزن رئيسي", // Fixed typo
                 "1*1",
             ],
             [
@@ -301,7 +299,7 @@ class InventoryScenarioSeeder extends Seeder
                 "محسن شعبان",
                 2,
                 "الدفاتر المالية",
-                "مخزن رئيسى",
+                "مخزن رئيسي", // Fixed typo
                 "2*1",
             ],
             [
@@ -314,7 +312,7 @@ class InventoryScenarioSeeder extends Seeder
                 "محسن شعبان",
                 4,
                 "الدفاتر المالية",
-                "مخزن رئيسى",
+                "مخزن رئيسي", // Fixed typo
                 "4*1",
             ],
             [
@@ -327,7 +325,7 @@ class InventoryScenarioSeeder extends Seeder
                 "محسن شعبان",
                 5,
                 "الدفاتر المالية",
-                "مخزن رئيسى",
+                "مخزن رئيسي", // Fixed typo
                 "5*1",
             ],
             [
@@ -340,7 +338,7 @@ class InventoryScenarioSeeder extends Seeder
                 "محسن شعبان",
                 6,
                 "الدفاتر المالية",
-                "مخزن رئيسى",
+                "مخزن رئيسي", // Fixed typo
                 "6*1",
             ],
             [
@@ -353,7 +351,7 @@ class InventoryScenarioSeeder extends Seeder
                 "محسن شعبان",
                 8,
                 "الدفاتر المالية",
-                "مخزن رئيسى",
+                "مخزن رئيسي", // Fixed typo
                 "8*1",
             ],
             [
@@ -366,7 +364,7 @@ class InventoryScenarioSeeder extends Seeder
                 "محسن شعبان",
                 12,
                 "الدفاتر المالية",
-                "مخزن رئيسى",
+                "مخزن رئيسي", // Fixed typo
                 "12*1",
             ],
             [
@@ -379,7 +377,7 @@ class InventoryScenarioSeeder extends Seeder
                 "محسن شعبان",
                 30,
                 "الدفاتر المالية",
-                "مخزن رئيسى",
+                "مخزن رئيسي", // Fixed typo
                 "30*1",
             ],
             [
@@ -392,7 +390,7 @@ class InventoryScenarioSeeder extends Seeder
                 "محسن شعبان",
                 31,
                 "الدفاتر المالية",
-                "مخزن رئيسى",
+                "مخزن رئيسي", // Fixed typo
                 "31*1",
             ],
             [
@@ -405,7 +403,7 @@ class InventoryScenarioSeeder extends Seeder
                 "محسن شعبان",
                 33,
                 "الدفاتر المالية",
-                "مخزن رئيسى",
+                "مخزن رئيسي", // Fixed typo
                 "33*1",
             ],
 
@@ -420,7 +418,7 @@ class InventoryScenarioSeeder extends Seeder
                 "زينات صدقي",
                 14,
                 "الدفاتر المالية",
-                "مخزن رئيسى",
+                "مخزن رئيسي", // Fixed typo
                 "14*1",
             ],
             [
@@ -433,7 +431,7 @@ class InventoryScenarioSeeder extends Seeder
                 "محسن شعبان",
                 15,
                 "الدفاتر المالية",
-                "مخزن رئيسى",
+                "مخزن رئيسي", // Fixed typo
                 "15*1",
             ],
             [
@@ -446,7 +444,7 @@ class InventoryScenarioSeeder extends Seeder
                 "محسن شعبان",
                 30,
                 "الأدوات الكتابية",
-                "مخزن رئيسى",
+                "مخزن رئيسي", // Fixed typo
                 "30*3",
             ],
             [
@@ -459,7 +457,7 @@ class InventoryScenarioSeeder extends Seeder
                 "محسن شعبان",
                 31,
                 "الأدوات الكتابية",
-                "مخزن رئيسى",
+                "مخزن رئيسي", // Fixed typo
                 "31*3",
             ],
             [
@@ -472,7 +470,7 @@ class InventoryScenarioSeeder extends Seeder
                 "محسن شعبان",
                 32,
                 "الأدوات الكتابية",
-                "مخزن رئيسى",
+                "مخزن رئيسي", // Fixed typo
                 "32*3",
             ],
             [
@@ -485,7 +483,7 @@ class InventoryScenarioSeeder extends Seeder
                 "محسن شعبان",
                 160,
                 "الأدوات الكتابية",
-                "مخزن رئيسى",
+                "مخزن رئيسي", // Fixed typo
                 "160*3",
             ],
             [
@@ -498,7 +496,7 @@ class InventoryScenarioSeeder extends Seeder
                 "محسن شعبان",
                 147,
                 "الأدوات الكتابية",
-                "مخزن رئيسى",
+                "مخزن رئيسي", // Fixed typo
                 "147*3",
             ],
             [
@@ -511,7 +509,7 @@ class InventoryScenarioSeeder extends Seeder
                 "محسن شعبان",
                 37,
                 "الأدوات الكتابية",
-                "مخزن رئيسى",
+                "مخزن رئيسي", // Fixed typo
                 "37*3",
             ],
             [
@@ -524,7 +522,7 @@ class InventoryScenarioSeeder extends Seeder
                 "محسن شعبان",
                 177,
                 "الأدوات الكتابية",
-                "مخزن رئيسى",
+                "مخزن رئيسي", // Fixed typo
                 "177*3",
             ],
             [
@@ -537,7 +535,7 @@ class InventoryScenarioSeeder extends Seeder
                 "محسن شعبان",
                 39,
                 "الأدوات الكتابية",
-                "مخزن رئيسى",
+                "مخزن رئيسي", // Fixed typo
                 "39*3",
             ],
 
@@ -552,7 +550,7 @@ class InventoryScenarioSeeder extends Seeder
                 "محسن شعبان",
                 40,
                 "الدفاتر المالية",
-                "مخزن رئيسى",
+                "مخزن رئيسي", // Fixed typo
                 "40*3",
             ],
             [
@@ -565,7 +563,7 @@ class InventoryScenarioSeeder extends Seeder
                 "محسن شعبان",
                 42,
                 "الدفاتر المالية",
-                "مخزن رئيسى",
+                "مخزن رئيسي", // Fixed typo
                 "42*1",
             ],
 
@@ -580,7 +578,7 @@ class InventoryScenarioSeeder extends Seeder
                 "محسن شعبان",
                 44,
                 "الأدوات الكتابية",
-                "مخزن رئيسى",
+                "مخزن رئيسي", // Fixed typo
                 "44*1",
             ],
             [
@@ -593,7 +591,7 @@ class InventoryScenarioSeeder extends Seeder
                 "محسن شعبان",
                 4,
                 "الأدوات الكتابية",
-                "مخزن رئيسى",
+                "مخزن رئيسي", // Fixed typo
                 "4*3",
             ],
             [
@@ -606,7 +604,7 @@ class InventoryScenarioSeeder extends Seeder
                 "محسن شعبان",
                 5,
                 "الأدوات الكتابية",
-                "مخزن رئيسى",
+                "مخزن رئيسي", // Fixed typo
                 "5*3",
             ],
             [
@@ -619,7 +617,7 @@ class InventoryScenarioSeeder extends Seeder
                 "محسن شعبان",
                 106,
                 "الأدوات الكتابية",
-                "مخزن رئيسى",
+                "مخزن رئيسي", // Fixed typo
                 "106*3",
             ],
             [
@@ -632,7 +630,7 @@ class InventoryScenarioSeeder extends Seeder
                 "محسن شعبان",
                 102,
                 "الأدوات الكتابية",
-                "مخزن رئيسى",
+                "مخزن رئيسي", // Fixed typo
                 "102*3",
             ],
             [
@@ -645,7 +643,7 @@ class InventoryScenarioSeeder extends Seeder
                 "محسن شعبان",
                 128,
                 "الأدوات الكتابية",
-                "مخزن رئيسى",
+                "مخزن رئيسي", // Fixed typo
                 "128*3",
             ],
             [
@@ -658,7 +656,7 @@ class InventoryScenarioSeeder extends Seeder
                 "محسن شعبان",
                 129,
                 "الأدوات الكتابية",
-                "مخزن رئيسى",
+                "مخزن رئيسي", // Fixed typo
                 "129*3",
             ],
             [
@@ -671,7 +669,7 @@ class InventoryScenarioSeeder extends Seeder
                 "محسن شعبان",
                 130,
                 "الأدوات الكتابية",
-                "مخزن رئيسى",
+                "مخزن رئيسي", // Fixed typo
                 "130*3",
             ],
             [
@@ -684,7 +682,7 @@ class InventoryScenarioSeeder extends Seeder
                 "محسن شعبان",
                 131,
                 "الأدوات الكتابية",
-                "مخزن رئيسى",
+                "مخزن رئيسي", // Fixed typo
                 "131*3",
             ],
             [
@@ -697,7 +695,7 @@ class InventoryScenarioSeeder extends Seeder
                 "محسن شعبان",
                 133,
                 "الأدوات الكتابية",
-                "مخزن رئيسى",
+                "مخزن رئيسي", // Fixed typo
                 "133*3",
             ],
             [
@@ -710,7 +708,7 @@ class InventoryScenarioSeeder extends Seeder
                 "محسن شعبان",
                 135,
                 "الأدوات الكتابية",
-                "مخزن رئيسى",
+                "مخزن رئيسي", // Fixed typo
                 "135*3",
             ],
             [
@@ -723,7 +721,7 @@ class InventoryScenarioSeeder extends Seeder
                 "محسن شعبان",
                 137,
                 "الأدوات الكتابية",
-                "مخزن رئيسى",
+                "مخزن رئيسي", // Fixed typo
                 "137*3",
             ],
             [
@@ -736,7 +734,7 @@ class InventoryScenarioSeeder extends Seeder
                 "محسن شعبان",
                 138,
                 "الأدوات الكتابية",
-                "مخزن رئيسى",
+                "مخزن رئيسي", // Fixed typo
                 "138*3",
             ],
             [
@@ -749,7 +747,7 @@ class InventoryScenarioSeeder extends Seeder
                 "محسن شعبان",
                 165,
                 "الأدوات الكتابية",
-                "مخزن رئيسى",
+                "مخزن رئيسي", // Fixed typo
                 "165*3",
             ],
         ];
@@ -763,7 +761,7 @@ class InventoryScenarioSeeder extends Seeder
             $bookedQty = $row[4];
             $price = $row[5];
             $empName = $row[6];
-            $categoryId = $row[7]; // ID from Data
+            $categoryId = $row[7];
             $storeName = $row[8];
             $custodyType = $row[9];
             $pageNoStr = $row[10];
@@ -804,12 +802,15 @@ class InventoryScenarioSeeder extends Seeder
                 ],
             );
 
-            // D. Ensure Category Exists (Using the provided ID)
+            // D. Ensure Category Exists with Correct Type Logic
+            // FIXED: Use the store's classification as the category type
+            // This ensures logic in ReportController matches:
+            // ->where('stores.classification', $category->type)
             $category = Category::firstOrCreate(
                 ['id' => $categoryId],
                 [
-                    'cat_name' => 'بند ' . $categoryId, // Fallback name
-                    'type' => 'مخزني عام'
+                    'cat_name' => 'بند ' . $categoryId,
+                    'type' => $store->classification // Dynamic assignment
                 ]
             );
 

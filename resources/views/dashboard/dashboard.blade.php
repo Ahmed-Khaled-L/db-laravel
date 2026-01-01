@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
 
     <script src="https://unpkg.com/lucide@latest"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.   com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
 
     <style>
         /* Modal Styles */

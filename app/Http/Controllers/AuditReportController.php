@@ -27,7 +27,6 @@ class AuditReportController extends Controller
             $storeCustodyType = ($auditType === 'main') ? 'مخزن رئيسي' : 'عهدة فرعية';
             $stores = Store::where('custody_type', $storeCustodyType)->get();
         }
-
         // 3. Handle Query Submission
         $records = [];
         $selectedStore = null;
