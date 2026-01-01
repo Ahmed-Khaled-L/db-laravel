@@ -12,7 +12,7 @@ class StoreItemMapping extends Model
     // Since this table uses a composite key, we disable auto-incrementing
     public $incrementing = false;
 
-    // Define the primary key (for documentation, though Eloquent requires specific handling for saves)
+    // Define the primary key
     protected $primaryKey = ['store_id', 'item_id'];
 
     protected $fillable = [
@@ -35,7 +35,9 @@ class StoreItemMapping extends Model
 
     public function category(): BelongsTo
     {
-        return $this->belongsTo(Category::class);
+        // FIX: Explicitly specify 'id' as the owner key.
+        // This prevents Laravel from trying to use the composite PK ['id', 'type'] which causes the crash.
+        return $this->belongsTo(Category::class, 'category_id', 'id');
     }
 
     /**

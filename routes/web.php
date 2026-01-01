@@ -13,6 +13,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PersonnelCustodyController;
 use App\Http\Controllers\InventoryCustodyController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\AuditReportController;
 
 // --- Dashboard ---
 Route::get("/", [DashboardController::class, "index"])->name("dashboard");
@@ -127,3 +128,7 @@ Route::get('/custody/inventory/details/{auditId}', [InventoryCustodyController::
 Route::post('/custody/inventory/details/{auditId}', [InventoryCustodyController::class, 'storeDetails'])->name('custody.inventory.storeDetails');
 
 Route::get('/reports/custody', [ReportController::class, 'custodyReport'])->name('reports.custody');
+
+
+
+Route::get('/audit/report', [AuditReportController::class, 'index'])->name('audit.report');

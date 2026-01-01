@@ -10,6 +10,63 @@
 
     <script src="https://unpkg.com/lucide@latest"></script>
     <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* Modal Styles */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .modal-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.2s;
+            text-decoration: none;
+            color: white;
+        }
+
+        .btn-main {
+            background-color: #2563eb;
+        }
+
+        .btn-branch {
+            background-color: #059669;
+        }
+
+        .btn-personnel {
+            background-color: #7c3aed;
+        }
+
+        .btn-close {
+            background-color: #ef4444;
+            margin-top: 20px;
+        }
+    </style>
 </head>
 
 <body>
@@ -75,7 +132,7 @@
                 <span class="arrow">➜</span>
             </div>
 
-            <div class="card" onclick="alert('صفحة الجرد')">
+            <div class="card" onclick="openAuditModal()">
                 <div class="icon-wrapper bg-emerald"><i data-lucide="clipboard-list" size="28"></i></div>
                 <h3>إنشاء جرد</h3>
                 <p>بدء عملية جرد جديدة</p>
@@ -199,6 +256,44 @@
             document.getElementById("mainMenu").style.display = 'grid';
             document.getElementById("pageTitle").textContent = "القائمة الرئيسية";
             document.getElementById("pageSub").textContent = "اختر العملية التي تريد القيام بها";
+        }
+    </script>
+
+
+    <div id="auditModal" class="modal-overlay">
+        <div class="modal-content fade-in">
+            <h3 style="margin-bottom: 20px;">اختر نوع الجرد</h3>
+
+            <a href="{{ route('audit.report', ['type' => 'main']) }}" class="modal-btn btn-main">
+                جرد المخازن الرئيسية
+            </a>
+
+            <a href="{{ route('audit.report', ['type' => 'branch']) }}" class="modal-btn btn-branch">
+                جرد العهد الفرعية
+            </a>
+
+            <a href="{{ route('audit.report', ['type' => 'personnel']) }}" class="modal-btn btn-personnel">
+                جرد العهد الشخصية
+            </a>
+
+            <button onclick="closeAuditModal()" class="modal-btn btn-close">إغلاق</button>
+        </div>
+    </div>
+
+    <script>
+        function openAuditModal() {
+            document.getElementById('auditModal').style.display = 'flex';
+        }
+
+        function closeAuditModal() {
+            document.getElementById('auditModal').style.display = 'none';
+        }
+
+        // Close on click outside
+        window.onclick = function(event) {
+            if (event.target == document.getElementById('auditModal')) {
+                closeAuditModal();
+            }
         }
     </script>
 </body>
